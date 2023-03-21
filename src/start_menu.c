@@ -1015,7 +1015,8 @@ static u8 SaveFileExistsCallback(void)
     }
     else
     {
-        ShowSaveMessage(gText_AlreadySavedFile, SaveConfirmOverwriteCallback);
+        //ShowSaveMessage(gText_AlreadySavedFile, SaveConfirmOverwriteCallback);
+        sSaveDialogCallback = SaveSavingMessageCallback;
     }
 
     return SAVE_IN_PROGRESS;
@@ -1030,13 +1031,14 @@ static u8 SaveConfirmOverwriteDefaultNoCallback(void)
 
 static u8 SaveConfirmOverwriteCallback(void)
 {
-    DisplayYesNoMenuDefaultYes(); // Show Yes/No menu
-    sSaveDialogCallback = SaveOverwriteInputCallback;
+    //DisplayYesNoMenuDefaultYes(); // Show Yes/No menu
+    //sSaveDialogCallback = SaveOverwriteInputCallback;
     return SAVE_IN_PROGRESS;
 }
 
 static u8 SaveOverwriteInputCallback(void)
 {
+    /*
     switch (Menu_ProcessInputNoWrapClearOnChoose())
     {
     case 0: // Yes
@@ -1048,7 +1050,7 @@ static u8 SaveOverwriteInputCallback(void)
         HideSaveMessageWindow();
         return SAVE_CANCELED;
     }
-
+    */
     return SAVE_IN_PROGRESS;
 }
 
