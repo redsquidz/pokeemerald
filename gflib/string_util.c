@@ -85,6 +85,28 @@ u8 *StringCopy(u8 *dest, const u8 *src)
     return dest;
 }
 
+u8 *DollarCentsFormat(u8 *MoneyString)
+{
+    s32 strLength;
+    u8 tempstring[7];
+    int i;
+
+    strLength = StringLength(MoneyString);
+    StringCopy(tempstring, MoneyString);
+
+    for(i = 1; i > -2; i--)
+        tempstring[strLength + i] = MoneyString[strLength + i - 1]; //tempstring is 1 longer, move the last 2 digits out to make room for the period char
+
+    tempstring[strLength - 2] = CHAR_PERIOD;
+    if (strLength <= 2)
+        tempstring[strLength - 3] = CHAR_0;
+    if (strLength == 1)
+        tempstring[strLength - 4] = CHAR_0;
+    StringCopy(MoneyString, tempstring);
+
+    return MoneyString;
+}
+
 u8 *StringAppend(u8 *dest, const u8 *src)
 {
     while (*dest != EOS)

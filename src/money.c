@@ -139,20 +139,12 @@ void PrintMoneyAmount(u8 windowId, u8 x, u8 y, int amount, u8 speed)
 {
     u8 *txtPtr;
     s32 strLength;
-    u8 tempstring[7];
 
     ConvertIntToDecimalStringN(gStringVar1, amount, STR_CONV_MODE_LEFT_ALIGN, 6);
     //6 is for largest power of 10 aka 999999 money cap
 
-    strLength = StringLength(gStringVar1);
-    StringCopy(tempstring, gStringVar1);
-
-    tempstring[strLength + 1] = gStringVar1[strLength]; //for(i =1; i> -3, i--)
-    tempstring[strLength] = gStringVar1[strLength - 1]; 
-    tempstring[strLength - 1] = gStringVar1[strLength - 2]; 
-    tempstring[strLength - 2] = CHAR_PERIOD;
-    StringCopy(gStringVar1, tempstring);
-
+    DollarCentsFormat(gStringVar1);
+ 
     strLength = 6 - StringLength(gStringVar1); //txtptr fills in empty money chars with spacers?
     txtPtr = gStringVar4;
 
