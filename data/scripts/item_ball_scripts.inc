@@ -1,10 +1,12 @@
 Money_Item_999999::
+	removeobject VAR_LAST_TALKED
 	addmoney 999999
 	msgbox gText_PlayerFoundMoney, MSGBOX_DEFAULT
 	playfanfare MUS_OBTAIN_ITEM
-	removeobject VAR_LAST_TALKED
 	setflag FLAG_LITTLEROOT_MONEY_999999
 	waitfanfare
+	waitmessage
+	msgbox gText_PutMoneyAway, MSGBOX_DEFAULT
 	waitmessage
 	release
 	end

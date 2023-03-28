@@ -13,6 +13,8 @@ gText_PlayerFoundOneItem::
 
 gText_PlayerFoundMoney::
 	.string "{PLAYER} found some money!$"
+
+gText_PutMoneyAway::
 	.string "{PLAYER} put the money in\n"
 	.string "their pocket.$"
 
