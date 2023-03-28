@@ -11,6 +11,11 @@ gText_PutItemInPocket::
 gText_PlayerFoundOneItem::
 	.string "{PLAYER} found one {STR_VAR_2}!$"
 
+gText_PlayerFoundMoney::
+	.string "{PLAYER} found some money!$"
+	.string "{PLAYER} put the money in\n"
+	.string "their pocket.$"
+
 gText_TooBadBagIsFull::
 	.string "Too bad!\n"
 	.string "The BAG is full…$"

@@ -98,6 +98,7 @@ u8 *DollarCentsFormat(u8 *MoneyString)
         tempstring[strLength + i] = MoneyString[strLength + i - 1]; //tempstring is 1 longer, move the last 2 digits out to make room for the period char
 
     tempstring[strLength - 2] = CHAR_PERIOD;
+
     if (strLength <= 2)
         tempstring[strLength - 3] = CHAR_0;
     if (strLength == 1)
