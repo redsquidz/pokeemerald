@@ -11,6 +11,19 @@ Money_Item_999999::
 	release
 	end
 
+Money_Item_000001::
+	removeobject VAR_LAST_TALKED
+	addmoney 1
+	msgbox gText_PlayerFoundMoney, MSGBOX_DEFAULT
+	playfanfare MUS_OBTAIN_ITEM
+	setflag FLAG_LITTLEROOT_MONEY_000001
+	waitfanfare
+	waitmessage
+	msgbox gText_PutMoneyAway, MSGBOX_DEFAULT
+	waitmessage
+	release
+	end
+
 Route102_EventScript_ItemPotion::
 	finditem ITEM_POTION
 	end

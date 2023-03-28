@@ -90,21 +90,32 @@ u8 *DollarCentsFormat(u8 *MoneyString)
     s32 strLength;
     u8 tempstring[7];
     int i;
+    int n;
 
     strLength = StringLength(MoneyString);
+    //if > 3 aka normal
+        n = 1;
+    if (strLength == 2)
+        n = 2;
+    if (strLength == 1)
+        n = 3;
+    
+    //initialize leading tempstring values (everything past decimal will be shuffled forward)
     StringCopy(tempstring, MoneyString);
 
-    for(i = 1; i > -2; i--)
-        tempstring[strLength + i] = MoneyString[strLength + i - 1]; //tempstring is 1 longer, move the last 2 digits out to make room for the period char
+    //shuffle everything forward again for period char
+    for(i = n; i > n - 3; i--)
+        tempstring[strLength + i] = MoneyString[strLength + i - n];
+    tempstring[strLength + n - 3] = CHAR_PERIOD;
 
-    tempstring[strLength - 2] = CHAR_PERIOD;
-
+    //add leading zeros for cent values
     if (strLength <= 2)
-        tempstring[strLength - 3] = CHAR_0;
+        tempstring[0] = CHAR_0;
     if (strLength == 1)
-        tempstring[strLength - 4] = CHAR_0;
-    StringCopy(MoneyString, tempstring);
+        tempstring[2] = CHAR_0;
 
+    //done!
+    StringCopy(MoneyString, tempstring);
     return MoneyString;
 }
 
