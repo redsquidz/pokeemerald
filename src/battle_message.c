@@ -2244,7 +2244,7 @@ void BufferStringBattle(u16 stringID)
         break;
     }
 
-    BattleStringExpandPlaceholdersToDisplayedString(stringPtr);
+    BattleStringExpandPlaceholdersToDisplayedString(stringPtr); //dollar?
 }
 
 u32 BattleStringExpandPlaceholdersToDisplayedString(const u8 *src)
@@ -2329,7 +2329,8 @@ u32 BattleStringExpandPlaceholders(const u8 *src, u8 *dst)
                 {
                     ExpandBattleTextBuffPlaceholders(gBattleTextBuff1, gStringVar1);
                     //dollarformat here?
-                    DollarCentsFormat(gStringVar1);
+                    if (gBattleTextBuff1[2] == 2 || gBattleTextBuff1[2] == 4)
+                        DollarCentsFormat(gStringVar1);
                     toCpy = gStringVar1;
                 }
                 else
