@@ -2329,8 +2329,11 @@ u32 BattleStringExpandPlaceholders(const u8 *src, u8 *dst)
                 {
                     ExpandBattleTextBuffPlaceholders(gBattleTextBuff1, gStringVar1);
                     //dollarformat here?
-                    if (gBattleTextBuff1[2] == 2 || gBattleTextBuff1[2] == 4)
+                    if (gBattleTextBuff1[9] == 1)
+                    {    
                         DollarCentsFormat(gStringVar1);
+                         gBattleTextBuff1[9] = 0; //reset flag
+                    }
                     toCpy = gStringVar1;
                 }
                 else

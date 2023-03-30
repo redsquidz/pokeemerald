@@ -5610,6 +5610,7 @@ static void Cmd_getmoneyreward(void)
 
     AddMoney(&gSaveBlock1Ptr->money, moneyReward);
     PREPARE_WORD_NUMBER_BUFFER(gBattleTextBuff1, 5, moneyReward);
+    gBattleTextBuff1[9] = 1; //create money flag. [9] Doesn't show in PREPARE_ but the array is 16 long so there's plenty of space
 
     gBattlescriptCurrInstr++;
 }
@@ -7379,6 +7380,7 @@ static void Cmd_givepaydaymoney(void)
         AddMoney(&gSaveBlock1Ptr->money, bonusMoney);
 
         PREPARE_HWORD_NUMBER_BUFFER(gBattleTextBuff1, 5, bonusMoney)
+        gBattleTextBuff1[9] = 1;
 
         BattleScriptPush(gBattlescriptCurrInstr + 1);
         gBattlescriptCurrInstr = BattleScript_PrintPayDayMoneyString;
