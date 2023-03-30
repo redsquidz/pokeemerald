@@ -2780,6 +2780,10 @@ static void ExpandBattleTextBuffPlaceholders(const u8 *src, u8 *dst)
                 break;
             }
             ConvertIntToDecimalStringN(dst, value, STR_CONV_MODE_LEFT_ALIGN, src[srcID + 2]);
+            //dollarcentsformat here?
+            if (src[srcID+1] == 2 || src[srcID+1] == 4 )
+                DollarCentsFormat(dst);
+            
             srcID += src[srcID + 1] + 3;
             break;
         case B_BUFF_MOVE: // move name

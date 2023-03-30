@@ -146,10 +146,23 @@ void PrintMoneyAmount(u8 windowId, u8 x, u8 y, int amount, u8 speed)
     DollarCentsFormat(gStringVar1);
  
     strLength = 6 - StringLength(gStringVar1); //txtptr fills in empty money chars with spacers?
+
     txtPtr = gStringVar4;
+    
+    //need to clear pokedollar sign after dropping to 5-digit money... run addtext to clear then drop to 38 if gstringvar1 = 6
+    x = 32; //text positioning for player money balance with 6-digit value
+    
+    //Clear artifacts from moving things around
+    txtPtr[0]=CHAR_SPACER;
+    txtPtr[8]=CHAR_SPACER;
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, gStringVar4, x, y, speed, NULL);
 
     while (strLength-- > 0)
         *(txtPtr++) = CHAR_SPACER;
+    
+    if (StringLength(gStringVar1) <= 6)
+        x = 38; //reset to normal x position if 5-digit balance or less
+
     StringExpandPlaceholders(txtPtr, gText_PokedollarVar1);
     AddTextPrinterParameterized(windowId, FONT_NORMAL, gStringVar4, x, y, speed, NULL);
 }
