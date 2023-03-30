@@ -2328,6 +2328,8 @@ u32 BattleStringExpandPlaceholders(const u8 *src, u8 *dst)
                 if (gBattleTextBuff1[0] == B_BUFF_PLACEHOLDER_BEGIN)
                 {
                     ExpandBattleTextBuffPlaceholders(gBattleTextBuff1, gStringVar1);
+                    //dollarformat here?
+                    DollarCentsFormat(gStringVar1);
                     toCpy = gStringVar1;
                 }
                 else
@@ -2781,8 +2783,8 @@ static void ExpandBattleTextBuffPlaceholders(const u8 *src, u8 *dst)
             }
             ConvertIntToDecimalStringN(dst, value, STR_CONV_MODE_LEFT_ALIGN, src[srcID + 2]);
             //dollarcentsformat here?
-            if (src[srcID+1] == 2 || src[srcID+1] == 4 )
-                DollarCentsFormat(dst);
+            //if (src[srcID+1] == 4)// || src[srcID+1] == 4 )
+            //    DollarCentsFormat(dst);
             
             srcID += src[srcID + 1] + 3;
             break;
