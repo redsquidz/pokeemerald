@@ -2244,7 +2244,7 @@ void BufferStringBattle(u16 stringID)
         break;
     }
 
-    BattleStringExpandPlaceholdersToDisplayedString(stringPtr); //dollar?
+    BattleStringExpandPlaceholdersToDisplayedString(stringPtr);
 }
 
 u32 BattleStringExpandPlaceholdersToDisplayedString(const u8 *src)
@@ -2328,12 +2328,14 @@ u32 BattleStringExpandPlaceholders(const u8 *src, u8 *dst)
                 if (gBattleTextBuff1[0] == B_BUFF_PLACEHOLDER_BEGIN)
                 {
                     ExpandBattleTextBuffPlaceholders(gBattleTextBuff1, gStringVar1);
-                    //dollarformat here?
+
+                    //DollarFormat for battle reward money!
                     if (gBattleTextBuff1[9] == 1)
                     {    
                         DollarCentsFormat(gStringVar1);
                          gBattleTextBuff1[9] = 0; //reset flag
                     }
+
                     toCpy = gStringVar1;
                 }
                 else
@@ -2785,11 +2787,7 @@ static void ExpandBattleTextBuffPlaceholders(const u8 *src, u8 *dst)
                 value = T1_READ_32(&src[srcID + 3]);
                 break;
             }
-            ConvertIntToDecimalStringN(dst, value, STR_CONV_MODE_LEFT_ALIGN, src[srcID + 2]);
-            //dollarcentsformat here?
-            //if (src[srcID+1] == 4)// || src[srcID+1] == 4 )
-            //    DollarCentsFormat(dst);
-            
+            ConvertIntToDecimalStringN(dst, value, STR_CONV_MODE_LEFT_ALIGN, src[srcID + 2]);          
             srcID += src[srcID + 1] + 3;
             break;
         case B_BUFF_MOVE: // move name

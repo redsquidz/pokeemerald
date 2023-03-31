@@ -5607,7 +5607,6 @@ static void Cmd_getmoneyreward(void)
     u32 moneyReward = GetTrainerMoneyToGive(gTrainerBattleOpponent_A);
     if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
         moneyReward += GetTrainerMoneyToGive(gTrainerBattleOpponent_B);
-
     AddMoney(&gSaveBlock1Ptr->money, moneyReward);
     PREPARE_WORD_NUMBER_BUFFER(gBattleTextBuff1, 5, moneyReward);
     gBattleTextBuff1[9] = 1; //create money flag. [9] Doesn't show in PREPARE_ but the array is 16 long so there's plenty of space
