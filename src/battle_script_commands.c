@@ -2554,7 +2554,7 @@ void SetMoveEffect(bool8 primary, u8 certain)
                 }
                 break;
             case MOVE_EFFECT_PAYDAY:
-                if (GET_BATTLER_SIDE(gBattlerAttacker) == B_SIDE_PLAYER)
+                if (GET_BATTLER_SIDE(gBattlerAttacker) == B_SIDE_OPPONENT) //wild mons give payday! Otherwise isn't it already your money? #dollarcentsformat
                 {
                     u16 payday = gPaydayMoney;
                     gPaydayMoney += (gBattleMons[gBattlerAttacker].level * 5);
