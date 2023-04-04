@@ -151,12 +151,14 @@ void PrintMoneyAmount(u8 windowId, u8 x, u8 y, int amount, u8 speed)
     
     //need to clear pokedollar sign after dropping to 5-digit money... run addtext to clear then drop to 38 if gstringvar1 = 6
     if (windowId == sMoneyBoxWindowId)
+    {
         x = 32; //text positioning for player money balance with 6-digit value
     
-    //Clear artifacts from moving things around
-    txtPtr[0]=CHAR_SPACER;
-    txtPtr[8]=CHAR_SPACER;
-    AddTextPrinterParameterized(windowId, FONT_NORMAL, gStringVar4, x, y, speed, NULL);
+        //Clear artifacts from moving things around
+        txtPtr[0]=CHAR_SPACER;
+        txtPtr[8]=CHAR_SPACER;
+        AddTextPrinterParameterized(windowId, FONT_NORMAL, gStringVar4, x, y, speed, NULL);
+    }
 
     while (strLength-- > 0)
         *(txtPtr++) = CHAR_SPACER;
