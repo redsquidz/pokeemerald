@@ -88,11 +88,12 @@ u8 *StringCopy(u8 *dest, const u8 *src)
 u8 *DollarCentsFormat(u8 *MoneyString)
 {
     s32 strLength;
-    u8 tempstring[7];
+    u8 tempstring[10];
     int i;
     int n;
 
     strLength = StringLength(MoneyString);
+    //How far do the numbers need to be bumped forward?
     //if > 3 aka normal
         n = 1;
     if (strLength == 2)
