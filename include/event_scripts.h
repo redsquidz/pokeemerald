@@ -591,6 +591,8 @@ extern const u8 BattleFrontier_OutsideEast_EventScript_WaterSudowoodo[];
 extern const u8 EventScript_SelectWithoutRegisteredItem[];
 
 // overworld
+extern const u8 EventScript_StepStart[];
+extern const u8 EventScript_StepStop[];
 extern const u8 EventScript_WhiteOut[];
 extern const u8 EventScript_ResetMrBriney[];
 extern const u8 EventScript_DoLinkRoomExit[];

@@ -426,6 +426,25 @@ bool32 ShouldDoScottBattleFrontierCall(void)
     return TRUE;
 }
 
+bool32 TooHungry(void)
+{
+    if (FlagGet(FLAG_TEST_STEP))
+    {
+       if (gMapHeader.mapType != MAP_TYPE_OCEAN_ROUTE)
+        {
+            if (++(*GetVarPointer(VAR_TEST_STEP)) < 20)
+                return FALSE;
+        } 
+    }
+    else
+    {
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
+
 bool32 ShouldDoRoxanneCall(void)
 {
     if (FlagGet(FLAG_ENABLE_ROXANNE_FIRST_CALL))

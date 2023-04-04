@@ -582,6 +582,11 @@ static bool8 TryStartStepCountScript(u16 metatileBehavior)
             ScriptContext_SetupScript(LittlerootTown_ProfessorBirchsLab_EventScript_ScottAboardSSTidalCall);
             return TRUE;
         }
+        if (TooHungry() == TRUE)
+        {
+            ScriptContext_SetupScript(EventScript_StepStop);
+            return TRUE;
+        }
         if (ShouldDoRoxanneCall() == TRUE)
         {
             ScriptContext_SetupScript(RustboroCity_Gym_EventScript_RegisterRoxanne);
