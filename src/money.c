@@ -9,6 +9,7 @@
 #include "sprite.h"
 #include "strings.h"
 #include "decompress.h"
+#include "item_menu.h"
 
 #define MAX_MONEY 999999
 
@@ -150,7 +151,7 @@ void PrintMoneyAmount(u8 windowId, u8 x, u8 y, int amount, u8 speed)
     txtPtr = gStringVar4;
     
     //need to clear pokedollar sign after dropping to 5-digit money... run addtext to clear then drop to 38 if gstringvar1 = 6
-    if (windowId == sMoneyBoxWindowId)
+    if (windowId == sMoneyBoxWindowId || windowId == gBagMenu->windowIds[ITEMWIN_MONEY])
     {
         x = 32; //text positioning for player money balance with 6-digit value
     
