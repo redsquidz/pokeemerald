@@ -426,13 +426,16 @@ bool32 ShouldDoScottBattleFrontierCall(void)
     return TRUE;
 }
 
-bool32 TooHungry(void)
+bool32 TooHungry()
 {
+
+u8 steps = VarGet(VAR_HOW_MANY_STEPS);
+
     if (FlagGet(FLAG_TEST_STEP))
     {
        if (gMapHeader.mapType != MAP_TYPE_OCEAN_ROUTE)
         {
-            if (++(*GetVarPointer(VAR_TEST_STEP)) < 20)
+            if (++(*GetVarPointer(VAR_TEST_STEP)) < steps)
                 return FALSE;
         } 
     }

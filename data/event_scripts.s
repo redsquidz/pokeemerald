@@ -579,6 +579,7 @@ gStdScripts_End::
 EventScript_StepStart::
 	setflag FLAG_TEST_STEP @start counting
 	setvar VAR_TEST_STEP, 0
+	setvar VAR_HOW_MANY_STEPS, 25
 	msgbox gText_StepStart, MSGBOX_DEFAULT
 	release
 	end
