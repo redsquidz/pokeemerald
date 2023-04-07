@@ -1083,7 +1083,7 @@ const struct Item gItems[] =
     {
         .name = _("REPEL"),
         .itemId = ITEM_REPEL,
-        .price = 350,
+        .price = 349,
         .holdEffectParam = 100,
         .description = sRepelDesc,
         .pocket = POCKET_ITEMS,
