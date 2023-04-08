@@ -1,6 +1,9 @@
 EventScript_RepelWoreOff::
 	lockall
 	checkitem VAR_QUICK_REPEL_TYPE, 1
+	
+	callnative Quick_Repel_Cycle
+	
 	compare VAR_RESULT, FALSE
 	goto_if_eq EventScript_RepelWoreOff_NoMoreRepels
 	msgbox Text_RepelWoreOff_UseAnother, MSGBOX_YESNO

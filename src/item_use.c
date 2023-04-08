@@ -67,6 +67,7 @@ static void UseTMHMYesNo(u8);
 static void UseTMHM(u8);
 static void Task_StartUseRepel(u8);
 static void Task_UseRepel(u8);
+void Quick_Repel_Cycle();
 static void Task_CloseCantUseKeyItemMessage(u8);
 static void SetDistanceOfClosestHiddenItem(u8, s16, s16);
 static void CB2_OpenPokeblockFromBag(void);
@@ -868,6 +869,38 @@ static void Task_UseRepel(u8 taskId)
             DisplayItemMessageInBattlePyramid(taskId, gStringVar4, Task_CloseBattlePyramidBagMessage);
     }
 }
+
+void Quick_Repel_Cycle(void)
+{//Once the last repel type has been depleted, find the next lowest repel class and set it as VAR_QUICK_REPEL_TYPE
+
+    //u16 Ref; //var type found by backtracking gSpecialVar_ItemId in above script
+    //VarSet(Ref, VAR_QUICK_REPEL_TYPE);
+
+    if (gSpecialVar_Result == FALSE) {
+        
+        gSpecialVar_Result = CheckBagHasItem(ITEM_REPEL, 1);
+        if (gSpecialVar_Result == TRUE){
+            VarSet(VAR_QUICK_REPEL_TYPE, ITEM_REPEL);
+            return;
+        }
+
+        gSpecialVar_Result = CheckBagHasItem(ITEM_SUPER_REPEL, 1);
+        if (gSpecialVar_Result == TRUE){
+            VarSet(VAR_QUICK_REPEL_TYPE, ITEM_SUPER_REPEL);
+            return;
+        }
+
+        gSpecialVar_Result = CheckBagHasItem(ITEM_MAX_REPEL, 1);
+        if (gSpecialVar_Result == TRUE){
+            VarSet(VAR_QUICK_REPEL_TYPE, ITEM_MAX_REPEL);
+            return;
+        }
+    }
+
+    return;
+}
+
+
 
 static void Task_UsedBlackWhiteFlute(u8 taskId)
 {
