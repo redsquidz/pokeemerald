@@ -871,12 +871,10 @@ static void Task_UseRepel(u8 taskId)
 }
 
 void Quick_Repel_Cycle(void)
-{//Once the last repel type has been depleted, find the next lowest repel class and set it as VAR_QUICK_REPEL_TYPE
+{//Once the last repel of the chosen type has been depleted, find the next lowest repel class 
+ //and start using it! (Set it as VAR_QUICK_REPEL_TYPE)
 
-    //u16 Ref; //var type found by backtracking gSpecialVar_ItemId in above script
-    //VarSet(Ref, VAR_QUICK_REPEL_TYPE);
-
-    if (gSpecialVar_Result == FALSE) {
+    if (gSpecialVar_Result == FALSE) { //remove this statement to immediately go to lowest class regardless of remaining qty
         
         gSpecialVar_Result = CheckBagHasItem(ITEM_REPEL, 1);
         if (gSpecialVar_Result == TRUE){

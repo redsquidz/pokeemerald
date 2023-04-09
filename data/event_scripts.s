@@ -576,28 +576,6 @@ gStdScripts_End::
 	.include "data/scripts/new_game.inc"
 	.include "data/scripts/hall_of_fame.inc"
 
-EventScript_StepStart::
-	setflag FLAG_TEST_STEP @start counting
-	setvar VAR_TEST_STEP, 0
-	setvar VAR_HOW_MANY_STEPS, 25
-	msgbox gText_StepStart, MSGBOX_DEFAULT
-	release
-	end
-
-EventScript_StepStop::
-	clearflag FLAG_TEST_STEP
-	buffernumberstring STR_VAR_1, VAR_TEST_STEP
-	msgbox gText_StepStop, MSGBOX_DEFAULT
-	release
-	end
-
-
-gText_StepStart::
-	.string "10k a day keeps the doctor away!$"
-
-gText_StepStop::
-	.string "Was that 10k or {STR_VAR_1}?$"
-
 EventScript_WhiteOut::
 	call EverGrandeCity_HallOfFame_EventScript_ResetEliteFour
 	goto EventScript_ResetMrBriney
@@ -1051,6 +1029,7 @@ Common_EventScript_LegendaryFlewAway::
 	.include "data/text/mauville_man.inc"
 	.include "data/text/trainers.inc"
 	.include "data/scripts/repel.inc"
+	.include "data/scripts/hunger.inc"
 	.include "data/scripts/safari_zone.inc"
 	.include "data/scripts/roulette.inc"
 	.include "data/text/pokedex_rating.inc"
