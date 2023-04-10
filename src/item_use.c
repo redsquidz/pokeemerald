@@ -874,25 +874,16 @@ void Quick_Repel_Cycle(void)
 {//Once the last repel of the chosen type has been depleted, find the next lowest repel class 
  //and start using it! (Set it as VAR_QUICK_REPEL_TYPE)
 
-    if (gSpecialVar_Result == FALSE) { //remove this statement to immediately go to lowest class regardless of remaining qty
-        
-        gSpecialVar_Result = CheckBagHasItem(ITEM_REPEL, 1);
-        if (gSpecialVar_Result == TRUE){
-            VarSet(VAR_QUICK_REPEL_TYPE, ITEM_REPEL);
-            return;
-        }
+    u16 RepelCycle[] = {ITEM_REPEL, ITEM_SUPER_REPEL, ITEM_MAX_REPEL};    
+    u8 i = 0;
 
-        gSpecialVar_Result = CheckBagHasItem(ITEM_SUPER_REPEL, 1);
-        if (gSpecialVar_Result == TRUE){
-            VarSet(VAR_QUICK_REPEL_TYPE, ITEM_SUPER_REPEL);
+    while (gSpecialVar_Result == FALSE){
+        gSpecialVar_Result = CheckBagHasItem(RepelCycle[i],1);
+        if (gSpecialVar_Result == TRUE)
+            VarSet(VAR_QUICK_REPEL_TYPE, RepelCycle[i]);
+        i++;
+        if (i > 2)
             return;
-        }
-
-        gSpecialVar_Result = CheckBagHasItem(ITEM_MAX_REPEL, 1);
-        if (gSpecialVar_Result == TRUE){
-            VarSet(VAR_QUICK_REPEL_TYPE, ITEM_MAX_REPEL);
-            return;
-        }
     }
 
     return;
