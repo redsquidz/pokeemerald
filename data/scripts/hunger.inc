@@ -1,5 +1,5 @@
 EventScript_StepStart::
-	setflag FLAG_TEST_STEP @start counting
+	@setflag FLAG_TEST_STEP @start counting
 	setflag FLAG_SYS_B_DASH
 	setvar VAR_TEST_STEP, 0
 	setvar VAR_HOW_MANY_STEPS, 25
@@ -8,7 +8,8 @@ EventScript_StepStart::
 	end
 
 EventScript_StepStop::
-	clearflag FLAG_TEST_STEP
+	lockall
+    @clearflag FLAG_TEST_STEP
 	setflag FLAG_TOO_HUNGRY
 	@buffernumberstring STR_VAR_1, VAR_TEST_STEP
 	@msgbox gText_StepStop, MSGBOX_DEFAULT

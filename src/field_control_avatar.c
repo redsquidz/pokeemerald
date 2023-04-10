@@ -492,6 +492,8 @@ static bool8 TryStartStepBasedScript(struct MapPosition *position, u16 metatileB
         return TRUE;
     if (UpdateRepelCounter() == TRUE)
         return TRUE;
+    if (TestStepCounter() == TRUE)
+        return TRUE;
     return FALSE;
 }
 
@@ -582,7 +584,7 @@ static bool8 TryStartStepCountScript(u16 metatileBehavior)
             ScriptContext_SetupScript(LittlerootTown_ProfessorBirchsLab_EventScript_ScottAboardSSTidalCall);
             return TRUE;
         }
-        if (TooHungry() == TRUE)
+        if (TestStepCounter() == TRUE)
         {
             ScriptContext_SetupScript(EventScript_StepStop);
             return TRUE;

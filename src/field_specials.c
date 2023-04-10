@@ -426,25 +426,21 @@ bool32 ShouldDoScottBattleFrontierCall(void)
     return TRUE;
 }
 
-bool32 TooHungry()
+bool8 TestStepCounter()
 {
-
-u8 steps = VarGet(VAR_HOW_MANY_STEPS);
-
-    if (FlagGet(FLAG_TEST_STEP))
+    u16 steps = VarGet(VAR_HOW_MANY_STEPS); //initialize or check how many steps left in counter
+    
+    //if (FlagGet(FLAG_TEST_STEP)) //step counter activated?
     {
-       if (gMapHeader.mapType != MAP_TYPE_OCEAN_ROUTE)
-        {
-            if (++(*GetVarPointer(VAR_TEST_STEP)) < steps)
-                return FALSE;
-        } 
-    }
-    else
-    {
-        return FALSE;
-    }
-
-    return TRUE;
+        if (steps != 0){ //stop before last step for animation to finish
+            
+            steps --; //countdown
+            VarSet(VAR_HOW_MANY_STEPS, steps); //update so next iteration is affected by the countdown
+            if (steps == 0)
+                return TRUE; //all steps have been counted
+        }    
+    } 
+    return FALSE; //not done counting steps
 }
 
 
