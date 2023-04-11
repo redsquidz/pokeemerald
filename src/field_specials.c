@@ -16,6 +16,7 @@
 #include "field_screen_effect.h"
 #include "field_specials.h"
 #include "field_weather.h"
+#include "flags.h"
 #include "graphics.h"
 #include "international_string_util.h"
 #include "item_icon.h"
@@ -430,19 +431,32 @@ bool8 TestStepCounter()
 {
     u16 steps = VarGet(VAR_HOW_MANY_STEPS); //initialize or check how many steps left in counter
     
-    //if (FlagGet(FLAG_TEST_STEP)) //step counter activated?
-    {
-        if (steps != 0){ //stop before last step for animation to finish
-            
-            steps --; //countdown
-            VarSet(VAR_HOW_MANY_STEPS, steps); //update so next iteration is affected by the countdown
-            if (steps == 0)
-                return TRUE; //all steps have been counted
-        }    
-    } 
+    if (steps != 0){ //deactivate counter if at zero
+        
+        steps --; //countdown
+        VarSet(VAR_HOW_MANY_STEPS, steps); //update so next iteration is affected by the countdown
+        if (steps == 0)
+            return TRUE; //all steps have been counted
+    }    
+    
     return FALSE; //not done counting steps
 }
 
+bool8 HungerCounter()
+{
+    u16 steps = VarGet(VAR_HUNGER_COUNT);
+    
+    if (steps != 0){
+        
+        steps --;
+        VarSet(VAR_HUNGER_COUNT, steps);
+        if (steps == 25)
+            FlagSet(FLAG_STARVING);
+        if (steps == 0)
+            return TRUE;
+    }    
+    return FALSE;
+}
 
 bool32 ShouldDoRoxanneCall(void)
 {

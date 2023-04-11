@@ -1,19 +1,26 @@
+EventScript_Hunger::
+    setvar VAR_HUNGER_COUNT, 50
+    releaseall
+    end
+
+
+
+
+
+
 EventScript_StepStart::
-	@setflag FLAG_TEST_STEP @start counting
 	setflag FLAG_SYS_B_DASH
-	setvar VAR_TEST_STEP, 0
 	setvar VAR_HOW_MANY_STEPS, 25
+    buffernumberstring STR_VAR_1, VAR_HOW_MANY_STEPS
 	msgbox gText_StepStart, MSGBOX_DEFAULT
 	release
 	end
 
 EventScript_StepStop::
 	lockall
-    @clearflag FLAG_TEST_STEP
 	setflag FLAG_TOO_HUNGRY
-	@buffernumberstring STR_VAR_1, VAR_TEST_STEP
-	@msgbox gText_StepStop, MSGBOX_DEFAULT
-	msgbox gText_Too_Hungry, MSGBOX_AUTOCLOSE
+	msgbox gText_StepStop, MSGBOX_DEFAULT
+	@msgbox gText_Too_Hungry, MSGBOX_AUTOCLOSE
 	release
 	end
 

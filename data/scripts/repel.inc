@@ -1,5 +1,6 @@
 EventScript_RepelWoreOff::
 	lockall
+	@bufferitemname STR_VAR_1, VAR_QUICK_REPEL_TYPE
 	checkitem VAR_QUICK_REPEL_TYPE, 1
 	
 	callnative Quick_Repel_Cycle
