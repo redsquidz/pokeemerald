@@ -251,6 +251,47 @@ static const u8 sGreenShardDesc[] = _(
     "ancient item. Can\n"
     "be sold cheaply.");
 
+// Apricorn Pokéballs
+static const u8 sLevelBallDesc[] = _(
+    "A POKé BALL that makes it easier to\n"
+    "catch POKéMON that are at a lower\n"
+    "level than your own.");
+
+static const u8 sLureBallDesc[] = _(
+    "A POKé BALL that is good for catching\n"
+    "POKéMON hooked by a fishing ROD\n"
+    "when fishing.");
+
+static const u8 sMoonBallDesc[] = _(
+    "A POKé BALL that makes it easier to\n"
+    "catch POKéMON that can evolve with\n"
+    "the use of a MOON STONE.");
+
+static const u8 sFriendBallDesc[] = _(
+    "A strange POKé BALL that makes the\n"
+    "wild POKéMON caught with it more\n"
+    "friendly.");
+
+static const u8 sFastBallDesc[] = _(
+    "A POKé BALL that makes it easier to\n"
+    "catch POKéMON that are usually very\n"
+    "quick to run away.");
+
+static const u8 sHeavyBallDesc[] = _(
+    "A POKé BALL that is better than\n"
+    "usual at catching very heavy\n"
+    "POKéMON.");
+
+static const u8 sLoveBallDesc[] = _(
+    "A POKé BALL that works best when\n"
+    "catching POKéMON that are the\n"
+    "opposite gender of your POKéMON.");
+
+static const u8 sZooBallDesc[] = _(
+    "A special POKé BALL that is used\n"
+    "in the VALLEY ZOO during monthly\n"
+    "FREE CATCH days! (Members Only)");
+
 // Vitamins
 static const u8 sHPUpDesc[] = _(
     "Raises the base HP\n"

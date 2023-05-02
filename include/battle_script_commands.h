@@ -2,6 +2,7 @@
 #define GUARD_BATTLE_SCRIPT_COMMANDS_H
 
 #include "constants/battle_script_commands.h"
+#include "constants/pokemon.h"
 
 // Arguments for 'flags' in HandleBattleWindow
 #define WINDOW_CLEAR (1 << 0)
@@ -9,6 +10,15 @@
 
 // Arguments for 'xStart, yStart, xEnd, yEnd' in HandleBattleWindow
 #define YESNOBOX_X_Y 24, 8, 29, 13
+
+// Weight Ball weight classes
+#define WEIGHT_AVERAGE  1024
+#define WEIGHT_HEAVY    2048
+#define WEIGHT_HEAVIER  3072
+#define WEIGHT_HEAVIEST 4096
+
+// Love Ball
+#define SINGLE_BATTLE_MONS 2 //How many pokemon are in a single (wild) battle
 
 void AI_CalcDmg(u8 battlerIdAtk, u8 battlerIdDef);
 u8 TypeCalc(u16 move, u8 battlerIdAtk, u8 battlerIdDef);

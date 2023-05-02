@@ -15,6 +15,14 @@ enum
     BALL_TIMER,
     BALL_LUXURY,
     BALL_PREMIER,
+    BALL_LEVEL,
+    BALL_LURE,
+    BALL_MOON,
+    BALL_FRIEND,
+    BALL_FAST,
+    BALL_HEAVY,
+    BALL_LOVE,
+    BALL_ZOO,
     POKEBALL_COUNT
 };
 
