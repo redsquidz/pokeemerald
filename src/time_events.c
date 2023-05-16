@@ -125,7 +125,7 @@ bool32 IsMoonPhase(enum MoonPhase phase){
     struct SiiRtcInfo *rtc;
 
     days = RtcGetDayCount(rtc) - ConvertDateToDayCount(2000,1,6); //Reference day
-    days /= 24 / 60;
+    days /= 24 / 60; //convert to minutes
     lunar_day = (days % syn_month) * syn_month; //this was changed to mins due to gba not liking floats
     if (lunar_day > syn_month)
         lunar_day = syn_month;

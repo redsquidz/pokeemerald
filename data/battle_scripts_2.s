@@ -14,26 +14,26 @@
 	.align 2
 gBattlescriptsForBallThrow::
 	.4byte BattleScript_BallThrow        @ ITEM_NONE
-	.4byte BattleScript_BallThrow        @ MASTER_BALL_2
-	.4byte BattleScript_BallThrow        @ ULTRA_BALL_2
-	.4byte BattleScript_BallThrow        @ GREAT_BALL_2
-	.4byte BattleScript_BallThrow        @ POKE_BALL_2
-	.4byte BattleScript_SafariBallThrow  @ SAFARI_BALL_2
-	.4byte BattleScript_BallThrow        @ NET_BALL_2
-	.4byte BattleScript_BallThrow        @ DIVE_BALL_2
-	.4byte BattleScript_BallThrow        @ NEST_BALL_2
-	.4byte BattleScript_BallThrow        @ REPEAT_BALL_2
-	.4byte BattleScript_BallThrow        @ TIMER_BALL_2
-	.4byte BattleScript_BallThrow        @ LUXURY_BALL_2
-	.4byte BattleScript_BallThrow        @ PREMIER_BALL_2
-	.4byte BattleScript_BallThrow        @ LEVEL_BALL_2
-	.4byte BattleScript_BallThrow        @ LURE_BALL_2
-	.4byte BattleScript_BallThrow        @ MOON_BALL_2
-	.4byte BattleScript_BallThrow        @ FRIEND_BALL_2
-	.4byte BattleScript_BallThrow        @ FAST_BALL_2
-	.4byte BattleScript_BallThrow        @ HEAVY_BALL_2
-	.4byte BattleScript_BallThrow        @ LOVE_BALL_2
-	.4byte BattleScript_BallThrow        @ ZOO_BALL_2
+	.4byte BattleScript_BallThrow        @ MASTER_BALL_2ID
+	.4byte BattleScript_BallThrow        @ ULTRA_BALL_2ID
+	.4byte BattleScript_BallThrow        @ GREAT_BALL_2ID
+	.4byte BattleScript_BallThrow        @ POKE_BALL_2ID
+	.4byte BattleScript_SafariBallThrow  @ SAFARI_BALL_2ID
+	.4byte BattleScript_BallThrow        @ NET_BALL_2ID
+	.4byte BattleScript_BallThrow        @ DIVE_BALL_2ID
+	.4byte BattleScript_BallThrow        @ NEST_BALL_2ID
+	.4byte BattleScript_BallThrow        @ REPEAT_BALL_2ID
+	.4byte BattleScript_BallThrow        @ TIMER_BALL_2ID
+	.4byte BattleScript_BallThrow        @ LUXURY_BALL_2ID
+	.4byte BattleScript_BallThrow        @ PREMIER_BALL_2ID
+	.4byte BattleScript_BallThrow        @ LEVEL_BALL_2ID
+	.4byte BattleScript_BallThrow        @ LURE_BALL_2ID
+	.4byte BattleScript_BallThrow        @ MOON_BALL_2ID
+	.4byte BattleScript_BallThrow        @ FRIEND_BALL_2ID
+	.4byte BattleScript_BallThrow        @ FAST_BALL_2ID
+	.4byte BattleScript_BallThrow        @ HEAVY_BALL_2ID
+	.4byte BattleScript_BallThrow        @ LOVE_BALL_2ID
+	.4byte BattleScript_BallThrow        @ ZOO_BALL_2ID
 
 	.align 2
 gBattlescriptsForUsingItem::

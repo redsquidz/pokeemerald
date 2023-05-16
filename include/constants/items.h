@@ -18,26 +18,26 @@
 #define ITEM_PREMIER_BALL 12
 
 // Secondary Ball IDs
-#define MASTER_BALL_2 1
-#define ULTRA_BALL_2 2
-#define GREAT_BALL_2 3
-#define POKE_BALL_2 4
-#define SAFARI_BALL_2 5
-#define NET_BALL_2 6
-#define DIVE_BALL_2 7
-#define NEST_BALL_2 8
-#define REPEAT_BALL_2 9
-#define TIMER_BALL_2 10
-#define LUXURY_BALL_2 11
-#define PREMIER_BALL_2 12
-#define LEVEL_BALL_2 13
-#define LURE_BALL_2 14
-#define MOON_BALL_2 15
-#define FRIEND_BALL_2 16
-#define FAST_BALL_2 17
-#define HEAVY_BALL_2 18
-#define LOVE_BALL_2 19
-#define ZOO_BALL_2 20
+#define MASTER_BALL_2ID 1
+#define ULTRA_BALL_2ID 2
+#define GREAT_BALL_2ID 3
+#define POKE_BALL_2ID 4
+#define SAFARI_BALL_2ID 5
+#define NET_BALL_2ID 6
+#define DIVE_BALL_2ID 7
+#define NEST_BALL_2ID 8
+#define REPEAT_BALL_2ID 9
+#define TIMER_BALL_2ID 10
+#define LUXURY_BALL_2ID 11
+#define PREMIER_BALL_2ID 12
+#define LEVEL_BALL_2ID 13
+#define LURE_BALL_2ID 14
+#define MOON_BALL_2ID 15
+#define FRIEND_BALL_2ID 16
+#define FAST_BALL_2ID 17
+#define HEAVY_BALL_2ID 18
+#define LOVE_BALL_2ID 19
+#define ZOO_BALL_2ID 20
 
 // Note: If moving ball IDs around, updating FIRST_BALL/LAST_BALL is not sufficient
 //       Several places expect the ball IDs to be first and contiguous (e.g. gBattlescriptsForBallThrow and MON_DATA_POKEBALL)
