@@ -5,7 +5,7 @@ void UpdateMirageRnd(u16);
 u8 IsMirageIslandPresent(void);
 void UpdateBirchState(u16);
 
-bool32 IsMoonPhase(enum MoonPhase phase);
+bool32 IsMoonPhase(u32 phase);
 
 enum MoonPhase{
     NEW_MOON = 1,

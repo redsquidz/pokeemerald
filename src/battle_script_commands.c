@@ -844,13 +844,13 @@ static const u8 sTerrainToType[] =
     [BATTLE_TERRAIN_PLAIN]      = TYPE_NORMAL,
 };
 
-// - BALL_ULTRA skips Master Ball and ITEM_NONE
+// - Ultra Ball skips Master Ball and ITEM_NONE
 static const u8 sBallCatchBonuses[] =
 {
-    [BALL_ULTRA - BALL_ULTRA]  = 20,
-    [BALL_GREAT - BALL_ULTRA]  = 15,
-    [BALL_POKE - BALL_ULTRA]   = 10,
-    [BALL_SAFARI - BALL_ULTRA] = 15
+    [ULTRA_BALL_2ID - ULTRA_BALL_2ID]  = 20,
+    [GREAT_BALL_2ID - ULTRA_BALL_2ID]  = 15,
+    [POKE_BALL_2ID - ULTRA_BALL_2ID]   = 10,
+    [SAFARI_BALL_2ID - ULTRA_BALL_2ID] = 15
 };
 
 // In Battle Palace, moves are chosen based on the pokemons nature rather than by the player
@@ -9810,8 +9810,8 @@ static void Cmd_removelightscreenreflect(void)
 
 static void Cmd_handleballthrow(void)
 {
-    u32 ball = ItemId_GetSecondaryId(gLastUsedItem); //Going by secondary ID due to out-of-order balls
-    u8 ballMultiplier = 10; //for friend, unlisted balls
+    u32 ball = ITEM_ID_TO_BALL_ID(gLastUsedItem); 
+    u8 ballMultiplier = 0; 
     s32 ballAddition = 0;
 
     if (gBattleControllerExecFlags)
@@ -9834,31 +9834,33 @@ static void Cmd_handleballthrow(void)
     }
     else
     {
-        u32 odds, i;
+        u32 odds, i; 
+        u16 eggGroups[SINGLE_BATTLE_MONS][EGG_GROUPS_PER_MON]; 
+        u16 species[SINGLE_BATTLE_MONS] = {gBattleMons[gBattlerAttacker].species, gBattleMons[gBattlerTarget].species};
         u8 catchRate;
 
-        if (ball == BALL_SAFARI)
+        if (ball == SAFARI_BALL_2ID)
             catchRate = gBattleStruct->safariCatchFactor * 1275 / 100;
         else
             catchRate = gSpeciesInfo[gBattleMons[gBattlerTarget].species].catchRate;
 
-        if (ball > BALL_SAFARI)
+        if (ball > SAFARI_BALL_2ID)
         {
             switch (ball)
             {
-            case BALL_NET:
+            case NET_BALL_2ID:
                 if (IS_BATTLER_OF_TYPE(gBattlerTarget, TYPE_WATER) || IS_BATTLER_OF_TYPE(gBattlerTarget, TYPE_BUG))
                     ballMultiplier = 30;
                 else
                     ballMultiplier = 10;
                 break;
-            case BALL_DIVE:
+            case DIVE_BALL_2ID:
                 if (GetCurrentMapType() == MAP_TYPE_UNDERWATER)
                     ballMultiplier = 35;
                 else
                     ballMultiplier = 10;
                 break;
-            case BALL_NEST:
+            case NEST_BALL_2ID:
                 if (gBattleMons[gBattlerTarget].level < 40)
                 {
                     ballMultiplier = 40 - gBattleMons[gBattlerTarget].level;
@@ -9870,22 +9872,23 @@ static void Cmd_handleballthrow(void)
                     ballMultiplier = 10;
                 }
                 break;
-            case BALL_REPEAT:
+            case REPEAT_BALL_2ID:
                 if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(gBattleMons[gBattlerTarget].species), FLAG_GET_CAUGHT))
                     ballMultiplier = 30;
                 else
                     ballMultiplier = 10;
                 break;
-            case BALL_TIMER:
+            case TIMER_BALL_2ID:
                 ballMultiplier = gBattleResults.battleTurnCounter + 10;
                 if (ballMultiplier > 40)
                     ballMultiplier = 40;
                 break;
-            case BALL_LUXURY:
-            case BALL_PREMIER:
+            case LUXURY_BALL_2ID:
+            case FRIEND_BALL_2ID:
+            case PREMIER_BALL_2ID:
                 ballMultiplier = 10;
                 break;
-            case BALL_LEVEL:
+            case LEVEL_BALL_2ID:
                 if (gBattleMons[gBattlerAttacker].level >= 4 * gBattleMons[gBattlerTarget].level)
                     ballMultiplier = 80;
                 else if (gBattleMons[gBattlerAttacker].level > 2 * gBattleMons[gBattlerTarget].level)
@@ -9893,11 +9896,11 @@ static void Cmd_handleballthrow(void)
                 else if (gBattleMons[gBattlerAttacker].level > gBattleMons[gBattlerTarget].level)
                     ballMultiplier = 20;
                 break;
-            case BALL_LURE:
+            case LURE_BALL_2ID:
                 if (gIsFishingEncounter)
                     ballMultiplier = 30;
                 break;
-            case BALL_MOON:
+            case MOON_BALL_2ID:
                 if (IsMoonPhase(FULL_MOON))
                     ballMultiplier = 40;
 
@@ -9905,7 +9908,9 @@ static void Cmd_handleballthrow(void)
                 {
                     if (gEvolutionTable[gBattleMons[gBattlerTarget].species][i].method == EVO_ITEM
                         && gEvolutionTable[gBattleMons[gBattlerTarget].species][i].param == ITEM_MOON_STONE){
+                        
                         ballMultiplier = 30;
+                        
                         if (IsMoonPhase(FULL_MOON) == TRUE)
                             ballMultiplier = 15; //why would a moon lover (lunatic?) want to be caught during party time??
                         else
@@ -9914,11 +9919,11 @@ static void Cmd_handleballthrow(void)
                 }
 
                 break;
-            case BALL_FAST:
+            case FAST_BALL_2ID:
                 if (gSpeciesInfo[gBattleMons[gBattlerTarget].species].baseSpeed > 99)
                     ballMultiplier = 40;
                 break;            
-            case BALL_HEAVY:
+            case HEAVY_BALL_2ID:
                 i = GetPokedexHeightWeight(SpeciesToNationalPokedexNum(gBattleMons[gBattlerTarget].species), 1);
                 if (i < WEIGHT_AVERAGE)
                     ballAddition = -20;
@@ -9937,10 +9942,8 @@ static void Cmd_handleballthrow(void)
                 else
                     catchRate = catchRate + ballAddition;
                 break;            
-            case BALL_LOVE:
+            case LOVE_BALL_2ID:
                 //Check egg compatibility
-                u16 eggGroups[SINGLE_BATTLE_MONS][EGG_GROUPS_PER_MON];
-                u16 species[SINGLE_BATTLE_MONS] = {gBattleMons[gBattlerAttacker].species, gBattleMons[gBattlerTarget].species};
                 for (i = 0; i < SINGLE_BATTLE_MONS; i++){
                     eggGroups[i][0] = gSpeciesInfo[species[i]].eggGroups[0];
                     eggGroups[i][1] = gSpeciesInfo[species[i]].eggGroups[1];
@@ -9957,7 +9960,7 @@ static void Cmd_handleballthrow(void)
                         ballMultiplier = 80;
                 }
                 break;
-            case BALL_ZOO:
+            case ZOO_BALL_2ID:
                 if (GetCurrentRegionMapSectionId() == MAPSEC_SAFARI_ZONE)
                     ballMultiplier = 35;
                 else
@@ -9966,7 +9969,7 @@ static void Cmd_handleballthrow(void)
             }
         }
         else
-            ballMultiplier = sBallCatchBonuses[ball - BALL_ULTRA];
+            ballMultiplier = sBallCatchBonuses[ball - ULTRA_BALL_2ID];
 
         odds = (catchRate * ballMultiplier / 10)
             * (gBattleMons[gBattlerTarget].maxHP * 3 - gBattleMons[gBattlerTarget].hp * 2)
@@ -9977,16 +9980,16 @@ static void Cmd_handleballthrow(void)
         if (gBattleMons[gBattlerTarget].status1 & (STATUS1_POISON | STATUS1_BURN | STATUS1_PARALYSIS | STATUS1_TOXIC_POISON))
             odds = (odds * 15) / 10;
 
-        if (ball != BALL_SAFARI)
+        if (ball != SAFARI_BALL_2ID)
         {
-            if (ball == BALL_MASTER)
+            if (ball == MASTER_BALL_2ID)
             {
                 gBattleResults.usedMasterBall = TRUE;
             }
             else
             {
-                if (gBattleResults.catchAttempts[ball - BALL_ULTRA] < 255)
-                    gBattleResults.catchAttempts[ball - BALL_ULTRA]++;
+                if (gBattleResults.catchAttempts[ball - ULTRA_BALL_2ID] < 255)
+                    gBattleResults.catchAttempts[ball - ULTRA_BALL_2ID]++;
             }
         }
 
@@ -10002,7 +10005,7 @@ static void Cmd_handleballthrow(void)
             else
                 gBattleCommunication[MULTISTRING_CHOOSER] = 1;
             
-            if (ball == BALL_FRIEND){
+            if (ball == FRIEND_BALL_2ID){
                 u8 friendship = 200;
                 SetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerTarget]], MON_DATA_FRIENDSHIP, &friendship);
             }                   
@@ -10016,7 +10019,7 @@ static void Cmd_handleballthrow(void)
 
             for (shakes = 0; shakes < BALL_3_SHAKES_SUCCESS && Random() < odds; shakes++);
 
-            if (ball == BALL_MASTER)
+            if (ball == MASTER_BALL_2ID)
                 shakes = BALL_3_SHAKES_SUCCESS; // why calculate the shakes before that check?
 
             BtlController_EmitBallThrowAnim(BUFFER_A, shakes);
@@ -10031,7 +10034,7 @@ static void Cmd_handleballthrow(void)
                     gBattleCommunication[MULTISTRING_CHOOSER] = 0;
                 else
                     gBattleCommunication[MULTISTRING_CHOOSER] = 1;
-                if (ball == BALL_FRIEND){
+                if (ball == FRIEND_BALL_2ID){
                     u8 friendship = 200;
                     SetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattlerTarget]], MON_DATA_FRIENDSHIP, &friendship);
                 }   

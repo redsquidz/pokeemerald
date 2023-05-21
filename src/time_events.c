@@ -117,14 +117,15 @@ void UpdateBirchState(u16 days)
     *state %= 7;
 }
 
-bool32 IsMoonPhase(enum MoonPhase phase){
+bool32 IsMoonPhase(u32 phase){
     //built using omnicalculator.com/everyday-life/moon-phase "How to calculate the Moon phase?"    
     u32 days;
     u32 lunar_day;
     u32 syn_month = 42524; //average moon cycle period (min; days = 29.53058770576 rounded to 29.530555)
-    struct SiiRtcInfo *rtc;
+    struct SiiRtcInfo rtc;
 
-    days = RtcGetDayCount(rtc) - ConvertDateToDayCount(2000,1,6); //Reference day
+    RtcGetDateTime(&rtc);
+    days = RtcGetDayCount(&rtc) - ConvertDateToDayCount(0,1,6); //Reference day
     days /= 24 / 60; //convert to minutes
     lunar_day = (days % syn_month) * syn_month; //this was changed to mins due to gba not liking floats
     if (lunar_day > syn_month)
@@ -132,7 +133,7 @@ bool32 IsMoonPhase(enum MoonPhase phase){
 
     switch (phase){
     case NEW_MOON:
-        if (0 < lunar_day && lunar_day <= 1440 || 41084 < lunar_day && lunar_day <= syn_month)
+        if ((0 < lunar_day && lunar_day <= 1440) || (41084 < lunar_day && lunar_day <= syn_month))
             return TRUE;
         break;
     case WAX_CRES:

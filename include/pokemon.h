@@ -1,6 +1,7 @@
 #ifndef GUARD_POKEMON_H
 #define GUARD_POKEMON_H
 
+#include "constants/pokemon.h"
 #include "sprite.h"
 
 // Property labels for Get(Box)MonData / Set(Box)MonData
@@ -94,6 +95,7 @@ enum {
     MON_DATA_SPEED2,
     MON_DATA_SPATK2,
     MON_DATA_SPDEF2,
+    MON_DATA_OTHER_BALL,
 };
 
 struct PokemonSubstruct0
@@ -103,7 +105,8 @@ struct PokemonSubstruct0
     u32 experience;
     u8 ppBonuses;
     u8 friendship;
-    u16 filler;
+    u16 otherBall:4;
+    u16 filler:11;
 };
 
 struct PokemonSubstruct1

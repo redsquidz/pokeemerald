@@ -918,6 +918,7 @@ static void GetItemName(s8 *dest, u16 itemId)
         CopyItemName(itemId, gStringVar2);
         StringExpandPlaceholders(dest, gText_NumberItem_TMBerry);
         break;
+    case BALLS_POCKET:
     default:
         CopyItemName(itemId, dest);
         break;

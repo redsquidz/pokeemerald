@@ -17,7 +17,7 @@
 #define ITEM_LUXURY_BALL 11
 #define ITEM_PREMIER_BALL 12
 
-// Secondary Ball IDs
+// Ball 2nd IDs
 #define MASTER_BALL_2ID 1
 #define ULTRA_BALL_2ID 2
 #define GREAT_BALL_2ID 3

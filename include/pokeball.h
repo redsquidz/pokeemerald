@@ -1,8 +1,7 @@
 #ifndef GUARD_POKEBALL_H
 #define GUARD_POKEBALL_H
 
-enum
-{
+enum BallGraphics{
     BALL_POKE,
     BALL_GREAT,
     BALL_SAFARI,
@@ -33,6 +32,11 @@ enum {
     BALL_AFFINE_ANIM_3,
     BALL_AFFINE_ANIM_4
 };
+
+//#define IS_ITEM_BALL(x) ((x) <= ITEM_PREMIER_BALL || ((x) >= ITEM_LEVEL_BALL && (x) <= ITEM_ZOO_BALL))
+//#define ITEM_ID_TO_BALL_ID(x) (((x) >= ITEM_LEVEL_BALL && (x) <= ITEM_ZOO_BALL) ? (((x) - ITEM_LEVEL_BALL) + BALL_LEVEL) : (x))
+#define IS_ITEM_BALL(x) (ItemId_GetPocket(x) == POCKET_POKE_BALLS)
+#define ITEM_ID_TO_BALL_ID(x) ((ItemId_GetPocket(x) == POCKET_POKE_BALLS) ? ItemId_GetSecondaryId(x) : (x))
 
 extern const struct CompressedSpriteSheet gBallSpriteSheets[];
 extern const struct CompressedSpritePalette gBallSpritePalettes[];
