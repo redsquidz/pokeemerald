@@ -18,9 +18,9 @@ enum BallGraphics{
     BALL_LURE,
     BALL_MOON,
     BALL_FRIEND,
+    BALL_LOVE,
     BALL_FAST,
     BALL_HEAVY,
-    BALL_LOVE,
     BALL_ZOO,
     POKEBALL_COUNT
 };

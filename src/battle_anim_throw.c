@@ -164,26 +164,26 @@ static const struct CaptureStar sCaptureStars[] =
 
 static const struct CompressedSpriteSheet sBallParticleSpriteSheets[POKEBALL_COUNT] =
 {
-    [BALL_POKE]    = {gBattleAnimSpriteGfx_Particles,           0x100, TAG_PARTICLES_POKEBALL},
-    [BALL_GREAT]   = {gBattleAnimSpriteGfx_Particles,           0x100, TAG_PARTICLES_GREATBALL},
-    [BALL_SAFARI]  = {gBattleAnimSpriteGfx_Particles,           0x100, TAG_PARTICLES_SAFARIBALL},
-    [BALL_ULTRA]   = {gBattleAnimSpriteGfx_Particles,           0x100, TAG_PARTICLES_ULTRABALL},
-    [BALL_MASTER]  = {gBattleAnimSpriteGfx_Particles,           0x100, TAG_PARTICLES_MASTERBALL},
-    [BALL_NET]     = {gBattleAnimSpriteGfx_Particles,           0x100, TAG_PARTICLES_NETBALL},
-    [BALL_DIVE]    = {gBattleAnimSpriteGfx_Particles,           0x100, TAG_PARTICLES_DIVEBALL},
-    [BALL_NEST]    = {gBattleAnimSpriteGfx_Particles,           0x100, TAG_PARTICLES_NESTBALL},
-    [BALL_REPEAT]  = {gBattleAnimSpriteGfx_Particles,           0x100, TAG_PARTICLES_REPEATBALL},
-    [BALL_TIMER]   = {gBattleAnimSpriteGfx_Particles,           0x100, TAG_PARTICLES_TIMERBALL},
-    [BALL_LUXURY]  = {gBattleAnimSpriteGfx_Particles,           0x100, TAG_PARTICLES_LUXURYBALL},
-    [BALL_PREMIER] = {gBattleAnimSpriteGfx_Particles,           0x100, TAG_PARTICLES_PREMIERBALL},
-    [BALL_LEVEL]   = {gBattleAnimSpriteGfx_Particles,           0x100, TAG_PARTICLES_LEVELBALL},
+    [BALL_POKE]    = {gBattleAnimSpriteGfx_Particles,           0x160, TAG_PARTICLES_POKEBALL},
+    [BALL_GREAT]   = {gBattleAnimSpriteGfx_Particles,           0x160, TAG_PARTICLES_GREATBALL},
+    [BALL_SAFARI]  = {gBattleAnimSpriteGfx_Particles,           0x160, TAG_PARTICLES_SAFARIBALL},
+    [BALL_ULTRA]   = {gBattleAnimSpriteGfx_Particles,           0x160, TAG_PARTICLES_ULTRABALL},
+    [BALL_MASTER]  = {gBattleAnimSpriteGfx_Particles,           0x160, TAG_PARTICLES_MASTERBALL},
+    [BALL_NET]     = {gBattleAnimSpriteGfx_Particles,           0x160, TAG_PARTICLES_NETBALL},
+    [BALL_DIVE]    = {gBattleAnimSpriteGfx_Particles,           0x160, TAG_PARTICLES_DIVEBALL},
+    [BALL_NEST]    = {gBattleAnimSpriteGfx_Particles,           0x160, TAG_PARTICLES_NESTBALL},
+    [BALL_REPEAT]  = {gBattleAnimSpriteGfx_Particles,           0x160, TAG_PARTICLES_REPEATBALL},
+    [BALL_TIMER]   = {gBattleAnimSpriteGfx_Particles,           0x160, TAG_PARTICLES_TIMERBALL},
+    [BALL_LUXURY]  = {gBattleAnimSpriteGfx_Particles,           0x160, TAG_PARTICLES_LUXURYBALL},
+    [BALL_PREMIER] = {gBattleAnimSpriteGfx_Particles,           0x160, TAG_PARTICLES_PREMIERBALL},
+    [BALL_LEVEL]   = {gBattleAnimSpriteGfx_Particles,           0x160, TAG_PARTICLES_LEVELBALL},
     [BALL_LURE]    = {gBattleAnimSpriteGfx_BallBubbleParticles,  0x80, TAG_PARTICLES_LUREBALL},
     [BALL_MOON]    = {gBattleAnimSpriteGfx_BallMoonParticles,    0xC0, TAG_PARTICLES_MOONBALL},
     [BALL_FRIEND]  = {gBattleAnimSpriteGfx_BallFriendParticles,  0xC0, TAG_PARTICLES_FRIENDBALL},
-    [BALL_LOVE]    = {gBattleAnimSpriteGfx_Particles,           0x100, TAG_PARTICLES_LOVEBALL},
+    [BALL_LOVE]    = {gBattleAnimSpriteGfx_Particles,           0x160, TAG_PARTICLES_LOVEBALL},
     [BALL_FAST]    = {gBattleAnimSpriteGfx_BallFastParticles,    0xE0, TAG_PARTICLES_FASTBALL},
-    [BALL_HEAVY]   = {gBattleAnimSpriteGfx_Particles,           0x100, TAG_PARTICLES_HEAVYBALL},
-    [BALL_ZOO]     = {gBattleAnimSpriteGfx_Particles,           0x100, TAG_PARTICLES_ZOOBALL},
+    [BALL_HEAVY]   = {gBattleAnimSpriteGfx_Particles,           0x160, TAG_PARTICLES_HEAVYBALL},
+    [BALL_ZOO]     = {gBattleAnimSpriteGfx_Particles,           0x160, TAG_PARTICLES_ZOOBALL},
 };
 
 static const struct CompressedSpritePalette sBallParticlePalettes[POKEBALL_COUNT] =
@@ -280,9 +280,9 @@ static const u8 sBallParticleAnimNums[POKEBALL_COUNT] =
     [BALL_LURE]    = 0,
     [BALL_MOON]    = 0,
     [BALL_FRIEND]  = 0,
+    [BALL_LOVE]    = 0,
     [BALL_FAST]    = 0,
     [BALL_HEAVY]   = 0,
-    [BALL_LOVE]    = 0,
     [BALL_ZOO]     = 0,
 };
 
@@ -517,9 +517,9 @@ const u16 gBallOpenFadeColors[] =
     [BALL_LURE] = RGB(8, 16, 30),
     [BALL_MOON] = RGB(19, 28, 22),
     [BALL_FRIEND] = RGB(3, 22, 7),
+    [BALL_LOVE] = RGB(31, 17, 10),    
     [BALL_FAST] = RGB(9, 8, 31),
     [BALL_HEAVY] = RGB(29, 30, 30),
-    [BALL_LOVE] = RGB(31, 17, 10),
     [BALL_ZOO] = RGB(23, 30, 20),
 
     // Garbage data

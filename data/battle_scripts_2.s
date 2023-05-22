@@ -30,9 +30,9 @@ gBattlescriptsForBallThrow::
 	.4byte BattleScript_BallThrow        @ LURE_BALL_2ID
 	.4byte BattleScript_BallThrow        @ MOON_BALL_2ID
 	.4byte BattleScript_BallThrow        @ FRIEND_BALL_2ID
+	.4byte BattleScript_BallThrow        @ LOVE_BALL_2ID
 	.4byte BattleScript_BallThrow        @ FAST_BALL_2ID
 	.4byte BattleScript_BallThrow        @ HEAVY_BALL_2ID
-	.4byte BattleScript_BallThrow        @ LOVE_BALL_2ID
 	.4byte BattleScript_BallThrow        @ ZOO_BALL_2ID
 
 	.align 2

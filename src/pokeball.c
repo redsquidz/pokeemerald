@@ -60,9 +60,9 @@ static u16 GetBattlerPokeballItemId(u8 battlerId);
 #define GFX_TAG_LURE_BALL    55013
 #define GFX_TAG_MOON_BALL    55014
 #define GFX_TAG_FRIEND_BALL  55015
-#define GFX_TAG_FAST_BALL    55016
-#define GFX_TAG_HEAVY_BALL   55017
-#define GFX_TAG_LOVE_BALL    55018
+#define GFX_TAG_LOVE_BALL    55016
+#define GFX_TAG_FAST_BALL    55017
+#define GFX_TAG_HEAVY_BALL   55018
 #define GFX_TAG_ZOO_BALL     55019
 
 const struct CompressedSpriteSheet gBallSpriteSheets[POKEBALL_COUNT] =
@@ -83,9 +83,9 @@ const struct CompressedSpriteSheet gBallSpriteSheets[POKEBALL_COUNT] =
     [BALL_LURE]    = {gBallGfx_Lure,    384, GFX_TAG_LURE_BALL},
     [BALL_MOON]    = {gBallGfx_Moon,    384, GFX_TAG_MOON_BALL},
     [BALL_FRIEND]  = {gBallGfx_Friend,  384, GFX_TAG_FRIEND_BALL},
+    [BALL_LOVE]    = {gBallGfx_Love,    384, GFX_TAG_LOVE_BALL},
     [BALL_FAST]    = {gBallGfx_Fast,    384, GFX_TAG_FAST_BALL},
     [BALL_HEAVY]   = {gBallGfx_Heavy,   384, GFX_TAG_HEAVY_BALL},
-    [BALL_LOVE]    = {gBallGfx_Love,    384, GFX_TAG_LOVE_BALL},
     [BALL_ZOO]    =  {gBallGfx_Zoo,     384, GFX_TAG_ZOO_BALL},
 };
 
@@ -107,10 +107,10 @@ const struct CompressedSpritePalette gBallSpritePalettes[POKEBALL_COUNT] =
     [BALL_LURE]    = {gBallPal_Lure,    GFX_TAG_LURE_BALL},
     [BALL_MOON]    = {gBallPal_Moon,    GFX_TAG_MOON_BALL},
     [BALL_FRIEND]  = {gBallPal_Friend,  GFX_TAG_FRIEND_BALL},
+    [BALL_LOVE]    = {gBallPal_Love,    GFX_TAG_LOVE_BALL},
     [BALL_FAST]    = {gBallPal_Fast,    GFX_TAG_FAST_BALL},
     [BALL_HEAVY]   = {gBallPal_Heavy,   GFX_TAG_HEAVY_BALL},
-    [BALL_LOVE]    = {gBallPal_Love,    GFX_TAG_LOVE_BALL},
-    [BALL_ZOO ]    = {gBallPal_Zoo,     GFX_TAG_ZOO_BALL},
+    [BALL_ZOO]     = {gBallPal_Zoo,     GFX_TAG_ZOO_BALL},
 };
 
 static const struct OamData sBallOamData =

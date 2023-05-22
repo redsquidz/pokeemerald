@@ -260,12 +260,12 @@ static const u8 sLevelBallDesc[] = _(
 static const u8 sLureBallDesc[] = _(
     "A BALL popular with\n"
     "POKéMON TRAINERS\n"
-    "who like fishing.");
+    "who like to fish.");
 
 static const u8 sMoonBallDesc[] = _(
-    "A BALL that shares\n"
-    "a connection with\n"
-    "the Moon.");
+    "A BALL that has\n"
+    "traits reminiscent\n"
+    "of the Moon.");
 
 static const u8 sFriendBallDesc[] = _(
     "A BALL that helps\n"
@@ -284,12 +284,12 @@ static const u8 sHeavyBallDesc[] = _(
 
 static const u8 sLoveBallDesc[] = _(
     "A BALL that works\n"
-    "well on POKéMON\n"
-    "curious of yours.");
+    "better if your\n"
+    "POKéMON can charm.");
 
 static const u8 sZooBallDesc[] = _(
     "A FREE BALL from\n"
-    "the VALLEY ZOO for\n"
+    "the VALLEY ZOO on\n"
     "MEMBER CATCH days!");
 
 // Vitamins
