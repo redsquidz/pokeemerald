@@ -9943,6 +9943,10 @@ static void Cmd_handleballthrow(void)
                     catchRate = catchRate + ballAddition;
                 break;            
             case LOVE_BALL_2ID:
+                //"Charm"s the other lol
+                if (gBattleMons[gBattlerTarget].species == SPECIES_CHARMANDER)
+                    ballMultiplier = 15;
+
                 //Check egg compatibility
                 for (i = 0; i < SINGLE_BATTLE_MONS; i++){
                     eggGroups[i][0] = gSpeciesInfo[species[i]].eggGroups[0];
