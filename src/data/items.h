@@ -23,7 +23,7 @@ const struct Item gItems[] =
         .type = ITEM_MASTER_BALL - FIRST_BALL,
         .battleUsage = ITEM_B_USE_OTHER,
         .battleUseFunc = ItemUseInBattle_PokeBall,
-        .secondaryId = ITEM_MASTER_BALL - FIRST_BALL,
+        .secondaryId = MASTER_BALL_2ID,
     },
 
     [ITEM_ULTRA_BALL] =
@@ -36,7 +36,7 @@ const struct Item gItems[] =
         .type = ITEM_ULTRA_BALL - FIRST_BALL,
         .battleUsage = ITEM_B_USE_OTHER,
         .battleUseFunc = ItemUseInBattle_PokeBall,
-        .secondaryId = ITEM_ULTRA_BALL - FIRST_BALL,
+        .secondaryId = ULTRA_BALL_2ID,
     },
 
     [ITEM_GREAT_BALL] =
@@ -49,7 +49,7 @@ const struct Item gItems[] =
         .type = ITEM_GREAT_BALL - FIRST_BALL,
         .battleUsage = ITEM_B_USE_OTHER,
         .battleUseFunc = ItemUseInBattle_PokeBall,
-        .secondaryId = ITEM_GREAT_BALL - FIRST_BALL,
+        .secondaryId = GREAT_BALL_2ID,
     },
 
     [ITEM_POKE_BALL] =
@@ -62,7 +62,7 @@ const struct Item gItems[] =
         .type = ITEM_POKE_BALL - FIRST_BALL,
         .battleUsage = ITEM_B_USE_OTHER,
         .battleUseFunc = ItemUseInBattle_PokeBall,
-        .secondaryId = ITEM_POKE_BALL - FIRST_BALL,
+        .secondaryId = POKE_BALL_2ID,
     },
 
     [ITEM_SAFARI_BALL] =
@@ -75,7 +75,7 @@ const struct Item gItems[] =
         .type = ITEM_SAFARI_BALL - FIRST_BALL,
         .battleUsage = ITEM_B_USE_OTHER,
         .battleUseFunc = ItemUseInBattle_PokeBall,
-        .secondaryId = ITEM_SAFARI_BALL - FIRST_BALL,
+        .secondaryId = SAFARI_BALL_2ID,
     },
 
     [ITEM_NET_BALL] =
@@ -88,7 +88,7 @@ const struct Item gItems[] =
         .type = ITEM_NET_BALL - FIRST_BALL,
         .battleUsage = ITEM_B_USE_OTHER,
         .battleUseFunc = ItemUseInBattle_PokeBall,
-        .secondaryId = ITEM_NET_BALL - FIRST_BALL,
+        .secondaryId = NET_BALL_2ID,
     },
 
     [ITEM_DIVE_BALL] =
@@ -101,7 +101,7 @@ const struct Item gItems[] =
         .type = ITEM_DIVE_BALL - FIRST_BALL,
         .battleUsage = ITEM_B_USE_OTHER,
         .battleUseFunc = ItemUseInBattle_PokeBall,
-        .secondaryId = ITEM_DIVE_BALL - FIRST_BALL,
+        .secondaryId = DIVE_BALL_2ID,
     },
 
     [ITEM_NEST_BALL] =
@@ -114,7 +114,7 @@ const struct Item gItems[] =
         .type = ITEM_NEST_BALL - FIRST_BALL,
         .battleUsage = ITEM_B_USE_OTHER,
         .battleUseFunc = ItemUseInBattle_PokeBall,
-        .secondaryId = ITEM_NEST_BALL - FIRST_BALL,
+        .secondaryId = NEST_BALL_2ID,
     },
 
     [ITEM_REPEAT_BALL] =
@@ -127,7 +127,7 @@ const struct Item gItems[] =
         .type = ITEM_REPEAT_BALL - FIRST_BALL,
         .battleUsage = ITEM_B_USE_OTHER,
         .battleUseFunc = ItemUseInBattle_PokeBall,
-        .secondaryId = ITEM_REPEAT_BALL - FIRST_BALL,
+        .secondaryId = REPEAT_BALL_2ID,
     },
 
     [ITEM_TIMER_BALL] =
@@ -140,7 +140,7 @@ const struct Item gItems[] =
         .type = ITEM_TIMER_BALL - FIRST_BALL,
         .battleUsage = ITEM_B_USE_OTHER,
         .battleUseFunc = ItemUseInBattle_PokeBall,
-        .secondaryId = ITEM_TIMER_BALL - FIRST_BALL,
+        .secondaryId = TIMER_BALL_2ID,
     },
 
     [ITEM_LUXURY_BALL] =
@@ -153,7 +153,7 @@ const struct Item gItems[] =
         .type = ITEM_LUXURY_BALL - FIRST_BALL,
         .battleUsage = ITEM_B_USE_OTHER,
         .battleUseFunc = ItemUseInBattle_PokeBall,
-        .secondaryId = ITEM_LUXURY_BALL - FIRST_BALL,
+        .secondaryId = LUXURY_BALL_2ID,
     },
 
     [ITEM_PREMIER_BALL] =
@@ -166,7 +166,7 @@ const struct Item gItems[] =
         .type = ITEM_PREMIER_BALL - FIRST_BALL,
         .battleUsage = ITEM_B_USE_OTHER,
         .battleUseFunc = ItemUseInBattle_PokeBall,
-        .secondaryId = ITEM_PREMIER_BALL - FIRST_BALL,
+        .secondaryId = PREMIER_BALL_2ID,
     },
 
 // Medicine
@@ -679,92 +679,110 @@ const struct Item gItems[] =
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
     },
 
-    [ITEM_034] =
+// Other Balls
+
+    [ITEM_LEVEL_BALL] =
     {
-        .name = _("????????"),
-        .itemId = ITEM_NONE,
-        .price = 0,
-        .description = sDummyDesc,
-        .pocket = POCKET_ITEMS,
-        .type = ITEM_USE_BAG_MENU,
-        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .name = _("LEVEL BALL"),
+        .itemId = ITEM_LEVEL_BALL,
+        .price = 150,
+        .description = sLevelBallDesc,
+        .pocket = POCKET_POKE_BALLS,
+        .type = LEVEL_BALL_2ID,
+        .battleUsage = ITEM_B_USE_OTHER,
+        .battleUseFunc = ItemUseInBattle_PokeBall,
+        .secondaryId = LEVEL_BALL_2ID,
     },
 
-    [ITEM_035] =
+    [ITEM_LURE_BALL] =
     {
-        .name = _("????????"),
-        .itemId = ITEM_NONE,
-        .price = 0,
-        .description = sDummyDesc,
-        .pocket = POCKET_ITEMS,
-        .type = ITEM_USE_BAG_MENU,
-        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .name = _("LURE BALL"),
+        .itemId = ITEM_LURE_BALL,
+        .price = 150,
+        .description = sLureBallDesc,
+        .pocket = POCKET_POKE_BALLS,
+        .type = LURE_BALL_2ID,
+        .battleUsage = ITEM_B_USE_OTHER,
+        .battleUseFunc = ItemUseInBattle_PokeBall,
+        .secondaryId = LURE_BALL_2ID,
     },
 
-    [ITEM_036] =
+    [ITEM_MOON_BALL] =
     {
-        .name = _("????????"),
-        .itemId = ITEM_NONE,
-        .price = 0,
-        .description = sDummyDesc,
-        .pocket = POCKET_ITEMS,
-        .type = ITEM_USE_BAG_MENU,
-        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .name = _("MOON BALL"),
+        .itemId = ITEM_MOON_BALL,
+        .price = 150,
+        .description = sMoonBallDesc,
+        .pocket = POCKET_POKE_BALLS,
+        .type = MOON_BALL_2ID,
+        .battleUsage = ITEM_B_USE_OTHER,
+        .battleUseFunc = ItemUseInBattle_PokeBall,
+        .secondaryId = MOON_BALL_2ID,
     },
 
-    [ITEM_037] =
+    [ITEM_FRIEND_BALL] =
     {
-        .name = _("????????"),
-        .itemId = ITEM_NONE,
-        .price = 0,
-        .description = sDummyDesc,
-        .pocket = POCKET_ITEMS,
-        .type = ITEM_USE_BAG_MENU,
-        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .name = _("FRIEND BALL"),
+        .itemId = ITEM_FRIEND_BALL,
+        .price = 150,
+        .description = sFriendBallDesc,
+        .pocket = POCKET_POKE_BALLS,
+        .type = FRIEND_BALL_2ID,
+        .battleUsage = ITEM_B_USE_OTHER,
+        .battleUseFunc = ItemUseInBattle_PokeBall,
+        .secondaryId = FRIEND_BALL_2ID,
     },
 
-    [ITEM_038] =
+    [ITEM_FAST_BALL] =
     {
-        .name = _("????????"),
-        .itemId = ITEM_NONE,
-        .price = 0,
-        .description = sDummyDesc,
-        .pocket = POCKET_ITEMS,
-        .type = ITEM_USE_BAG_MENU,
-        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .name = _("FAST BALL"),
+        .itemId = ITEM_FAST_BALL,
+        .price = 150,
+        .description = sFastBallDesc,
+        .pocket = POCKET_POKE_BALLS,
+        .type = FAST_BALL_2ID,
+        .battleUsage = ITEM_B_USE_OTHER,
+        .battleUseFunc = ItemUseInBattle_PokeBall,
+        .secondaryId = FAST_BALL_2ID,
     },
 
-    [ITEM_039] =
+    [ITEM_HEAVY_BALL] =
     {
-        .name = _("????????"),
-        .itemId = ITEM_NONE,
-        .price = 0,
-        .description = sDummyDesc,
-        .pocket = POCKET_ITEMS,
-        .type = ITEM_USE_BAG_MENU,
-        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .name = _("HEAVY BALL"),
+        .itemId = ITEM_HEAVY_BALL,
+        .price = 150,
+        .description = sHeavyBallDesc,
+        .pocket = POCKET_POKE_BALLS,
+        .type = HEAVY_BALL_2ID,
+        .battleUsage = ITEM_B_USE_OTHER,
+        .battleUseFunc = ItemUseInBattle_PokeBall,
+        .secondaryId = HEAVY_BALL_2ID,
     },
 
-    [ITEM_03A] =
+    [ITEM_LOVE_BALL] =
     {
-        .name = _("????????"),
-        .itemId = ITEM_NONE,
-        .price = 0,
-        .description = sDummyDesc,
-        .pocket = POCKET_ITEMS,
-        .type = ITEM_USE_BAG_MENU,
-        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .name = _("LOVE BALL"),
+        .itemId = ITEM_LOVE_BALL,
+        .price = 150,
+        .description = sLoveBallDesc,
+        .pocket = POCKET_POKE_BALLS,
+        .type = LOVE_BALL_2ID,
+        .battleUsage = ITEM_B_USE_OTHER,
+        .battleUseFunc = ItemUseInBattle_PokeBall,
+        .secondaryId = LOVE_BALL_2ID,
     },
 
-    [ITEM_03B] =
+    [ITEM_ZOO_BALL] =
     {
-        .name = _("????????"),
-        .itemId = ITEM_NONE,
-        .price = 0,
-        .description = sDummyDesc,
-        .pocket = POCKET_ITEMS,
-        .type = ITEM_USE_BAG_MENU,
-        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .name = _("ZOO BALL"),
+        .itemId = ITEM_ZOO_BALL,
+        .price = 150,
+        .description = sZooBallDesc,
+        .pocket = POCKET_POKE_BALLS,
+        .type = ZOO_BALL_2ID,
+        .battleUsage = ITEM_B_USE_OTHER,
+        .battleUseFunc = ItemUseInBattle_PokeBall,
+        .secondaryId = ZOO_BALL_2ID,
     },
 
     [ITEM_03C] =

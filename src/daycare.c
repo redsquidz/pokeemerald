@@ -999,7 +999,7 @@ static u8 GetDaycarePokemonCount(void)
 
 // Determine if the two given egg group lists contain any of the
 // same egg groups.
-static bool8 EggGroupsOverlap(u16 *eggGroups1, u16 *eggGroups2)
+bool8 EggGroupsOverlap(u16 *eggGroups1, u16 *eggGroups2)
 {
     s32 i, j;
 

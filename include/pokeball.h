@@ -1,8 +1,8 @@
 #ifndef GUARD_POKEBALL_H
 #define GUARD_POKEBALL_H
 
-enum
-{
+//This is what the 2IDs are converted to for the rest of the ball handling. Order is likely important, haven't tested.
+enum BallGraphics{
     BALL_POKE,
     BALL_GREAT,
     BALL_SAFARI,
@@ -15,6 +15,14 @@ enum
     BALL_TIMER,
     BALL_LUXURY,
     BALL_PREMIER,
+    BALL_LEVEL,
+    BALL_LURE,
+    BALL_MOON,
+    BALL_FRIEND,
+    BALL_LOVE,
+    BALL_FAST,
+    BALL_HEAVY,
+    BALL_ZOO,
     POKEBALL_COUNT
 };
 
@@ -25,6 +33,10 @@ enum {
     BALL_AFFINE_ANIM_3,
     BALL_AFFINE_ANIM_4
 };
+
+//These two functions are modified from Crystal Dust for more general use
+#define IS_ITEM_BALL(x) (ItemId_GetPocket(x) == POCKET_POKE_BALLS)
+#define ITEM_ID_TO_BALL_ID(x) ((ItemId_GetPocket(x) == POCKET_POKE_BALLS) ? ItemId_GetSecondaryId(x) : (x))
 
 extern const struct CompressedSpriteSheet gBallSpriteSheets[];
 extern const struct CompressedSpritePalette gBallSpritePalettes[];

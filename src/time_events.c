@@ -116,3 +116,55 @@ void UpdateBirchState(u16 days)
     *state += days;
     *state %= 7;
 }
+
+bool32 IsMoonPhase(u32 phase){
+    //built using omnicalculator.com/everyday-life/moon-phase "How to calculate the Moon phase?"    
+    u32 days;
+    u32 lunar_day;
+    u32 syn_month = 42524; //average moon cycle period (min; days = 29.53058770576 rounded to 29.530555)
+    struct SiiRtcInfo rtc;
+
+    RtcGetDateTime(&rtc);
+    days = RtcGetDayCount(&rtc) - ConvertDateToDayCount(0,1,6); //Reference day
+    days /= 24 / 60; //convert to minutes
+    lunar_day = (days % syn_month) * syn_month; //this was changed to mins due to gba not liking floats
+    if (lunar_day > syn_month)
+        lunar_day = syn_month;
+
+    switch (phase){
+    case NEW_MOON:
+        if ((0 < lunar_day && lunar_day <= 1440) || (41084 < lunar_day && lunar_day <= syn_month))
+            return TRUE;
+        break;
+    case WAX_CRES:
+        if (1440 < lunar_day && lunar_day <= 9191)
+            return TRUE;
+        break;
+    case FIRST_QTR:
+        if (9191 < lunar_day && lunar_day <= 12071)
+            return TRUE;    
+        break;
+    case WAX_GIB:
+        if (12071 < lunar_day && lunar_day <= 19822)
+            return TRUE;
+        break;
+    case FULL_MOON:
+        if (19822 < lunar_day && lunar_day <= 22702)
+            return TRUE;
+        break;
+    case WAN_GIB:
+        if (22702 < lunar_day && lunar_day <= 30453)
+            return TRUE;
+        break;
+    case LAST_QTR:
+        if (30453 < lunar_day && lunar_day <= 33333)
+            return TRUE;
+        break;
+    case WAN_CRES:
+        if (33333 < lunar_day && lunar_day <= 41084)
+            return TRUE;
+        break;
+    }
+
+    return FALSE;
+}

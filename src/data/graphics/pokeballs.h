@@ -34,4 +34,30 @@ const u32 gBallPal_Luxury[] = INCBIN_U32("graphics/balls/luxury.gbapal.lz");
 const u32 gBallGfx_Premier[] = INCBIN_U32("graphics/balls/premier.4bpp.lz");
 const u32 gBallPal_Premier[] = INCBIN_U32("graphics/balls/premier.gbapal.lz");
 
+//Apricorn
+const u32 gBallGfx_Level[] = INCBIN_U32("graphics/balls/level.4bpp.lz");
+const u32 gBallPal_Level[] = INCBIN_U32("graphics/balls/level.gbapal.lz");
+
+const u32 gBallGfx_Lure[] = INCBIN_U32("graphics/balls/lure.4bpp.lz");
+const u32 gBallPal_Lure[] = INCBIN_U32("graphics/balls/lure.gbapal.lz");
+
+const u32 gBallGfx_Moon[] = INCBIN_U32("graphics/balls/moon.4bpp.lz");
+const u32 gBallPal_Moon[] = INCBIN_U32("graphics/balls/moon.gbapal.lz");
+
+const u32 gBallGfx_Friend[] = INCBIN_U32("graphics/balls/friend.4bpp.lz");
+const u32 gBallPal_Friend[] = INCBIN_U32("graphics/balls/friend.gbapal.lz");
+
+const u32 gBallGfx_Fast[] = INCBIN_U32("graphics/balls/fast.4bpp.lz");
+const u32 gBallPal_Fast[] = INCBIN_U32("graphics/balls/fast.gbapal.lz");
+
+const u32 gBallGfx_Heavy[] = INCBIN_U32("graphics/balls/heavy.4bpp.lz");
+const u32 gBallPal_Heavy[] = INCBIN_U32("graphics/balls/heavy.gbapal.lz");
+
+const u32 gBallGfx_Love[] = INCBIN_U32("graphics/balls/love.4bpp.lz");
+const u32 gBallPal_Love[] = INCBIN_U32("graphics/balls/love.gbapal.lz");
+
+const u32 gBallGfx_Zoo[] = INCBIN_U32("graphics/balls/zoo.4bpp.lz");
+const u32 gBallPal_Zoo[] = INCBIN_U32("graphics/balls/zoo.gbapal.lz");
+
+
 const u32 gOpenPokeballGfx[] = INCBIN_U32("graphics/balls/open.4bpp.lz");

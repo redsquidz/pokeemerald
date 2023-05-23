@@ -30,6 +30,24 @@ extern const u32 gBallGfx_Luxury[];
 extern const u32 gBallPal_Luxury[];
 extern const u32 gBallGfx_Premier[];
 extern const u32 gBallPal_Premier[];
+//Apricorn Balls
+extern const u32 gBallGfx_Level[];
+extern const u32 gBallPal_Level[];
+extern const u32 gBallGfx_Lure[];
+extern const u32 gBallPal_Lure[];
+extern const u32 gBallGfx_Moon[];
+extern const u32 gBallPal_Moon[];
+extern const u32 gBallGfx_Friend[];
+extern const u32 gBallPal_Friend[];
+extern const u32 gBallGfx_Fast[];
+extern const u32 gBallPal_Fast[];
+extern const u32 gBallGfx_Heavy[];
+extern const u32 gBallPal_Heavy[];
+extern const u32 gBallGfx_Love[];
+extern const u32 gBallPal_Love[];
+extern const u32 gBallGfx_Zoo[];
+extern const u32 gBallPal_Zoo[];
+
 extern const u32 gOpenPokeballGfx[];
 
 // pokemon gfx
@@ -3385,6 +3403,24 @@ extern const u32 gItemIcon_TimerBall[];
 extern const u32 gItemIcon_LuxuryBall[];
 extern const u32 gItemIconPalette_LuxuryBall[];
 extern const u32 gItemIcon_PremierBall[];
+//Other Balls
+extern const u32 gItemIcon_LevelBall[];
+extern const u32 gItemIconPalette_LevelBall[];
+extern const u32 gItemIcon_LoveBall[];
+extern const u32 gItemIconPalette_LoveBall[];
+extern const u32 gItemIcon_LureBall[];
+extern const u32 gItemIconPalette_LureBall[];
+extern const u32 gItemIcon_FriendBall[];
+extern const u32 gItemIconPalette_FriendBall[];
+extern const u32 gItemIcon_HeavyBall[];
+extern const u32 gItemIconPalette_HeavyBall[];
+extern const u32 gItemIcon_FastBall[];
+extern const u32 gItemIconPalette_FastBall[];
+extern const u32 gItemIcon_MoonBall[];
+extern const u32 gItemIconPalette_MoonBall[];
+extern const u32 gItemIcon_ZooBall[];
+extern const u32 gItemIconPalette_ZooBall[];
+
 // Medicine
 extern const u32 gItemIcon_Potion[];
 extern const u32 gItemIconPalette_Potion[];
@@ -4284,6 +4320,10 @@ extern const u32 gBattleAnimSpriteGfx_Smoke[];
 extern const u32 gBattleAnimSpriteGfx_Smoke2[];
 extern const u32 gBattleAnimSpriteGfx_Impact[];
 extern const u32 gBattleAnimSpriteGfx_Particles[];
+extern const u32 gBattleAnimSpriteGfx_BallBubbleParticles[];
+extern const u32 gBattleAnimSpriteGfx_BallMoonParticles[];
+extern const u32 gBattleAnimSpriteGfx_BallFriendParticles[];
+extern const u32 gBattleAnimSpriteGfx_BallFastParticles[];
 extern const u32 gBattleAnimSpriteGfx_CircleImpact[];
 extern const u32 gBattleAnimSpriteGfx_Scratch[];
 extern const u32 gBattleAnimSpriteGfx_Cut[];

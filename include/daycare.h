@@ -18,6 +18,7 @@ void StoreSelectedPokemonInDaycare(void);
 u16 TakePokemonFromDaycare(void);
 void GetDaycareCost(void);
 u8 GetNumLevelsGainedFromDaycare(void);
+bool8 EggGroupsOverlap(u16 *eggGroups1, u16 *eggGroups2);
 void TriggerPendingDaycareEgg(void);
 void RejectEggFromDayCare(void);
 void CreateEgg(struct Pokemon *mon, u16 species, bool8 setHotSpringsLocation);

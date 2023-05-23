@@ -17,6 +17,35 @@
 #define ITEM_LUXURY_BALL 11
 #define ITEM_PREMIER_BALL 12
 
+// Ball 2nd IDs
+#define MASTER_BALL_2ID 1
+#define ULTRA_BALL_2ID 2
+#define GREAT_BALL_2ID 3
+#define POKE_BALL_2ID 4
+#define SAFARI_BALL_2ID 5
+#define NET_BALL_2ID 6
+#define DIVE_BALL_2ID 7
+#define NEST_BALL_2ID 8
+#define REPEAT_BALL_2ID 9
+#define TIMER_BALL_2ID 10
+#define LUXURY_BALL_2ID 11
+#define PREMIER_BALL_2ID 12
+#define LEVEL_BALL_2ID 13
+#define LURE_BALL_2ID 14
+#define MOON_BALL_2ID 15
+#define FRIEND_BALL_2ID 16
+#define FAST_BALL_2ID 17
+#define HEAVY_BALL_2ID 18
+#define LOVE_BALL_2ID 19
+#define ZOO_BALL_2ID 20
+
+// Easy_Pokeball: Add SecondaryIDs above, don't worry about the below note with FIRST_BALL and LAST_BALL as it breaks doing this.
+// These 2IDs are just used in Cmd_HandleBallThrow in battle_script_commands.c and are later converted
+// in ItemIdToBallId in battle_anim_throw.c
+// The "ZOO_BALL" replaces the PARK_BALL in my hack. If adding another cluster of ITEM_BALLs elsewhere, some references may need to be modified.
+// EX: The Level Ball is used as a reference point several times in other files
+// Useful search keywords: "other ball", "ITEM_ID_TO_BALL_ID", "IS_ITEM_BALL", "MON_DATA_OTHER_BALL", "otherBall", "BallGraphics", "BALL_LEVEL"
+
 // Note: If moving ball IDs around, updating FIRST_BALL/LAST_BALL is not sufficient
 //       Several places expect the ball IDs to be first and contiguous (e.g. gBattlescriptsForBallThrow and MON_DATA_POKEBALL)
 //       If adding new balls, it's easiest to insert them after the last ball and increment the below IDs (and removing ITEM_034 for example)
@@ -63,14 +92,14 @@
 #define ITEM_BLUE_SHARD 49
 #define ITEM_YELLOW_SHARD 50
 #define ITEM_GREEN_SHARD 51
-#define ITEM_034 52
-#define ITEM_035 53
-#define ITEM_036 54
-#define ITEM_037 55
-#define ITEM_038 56
-#define ITEM_039 57
-#define ITEM_03A 58
-#define ITEM_03B 59
+#define ITEM_LEVEL_BALL 52
+#define ITEM_LURE_BALL 53
+#define ITEM_MOON_BALL 54
+#define ITEM_FRIEND_BALL 55
+#define ITEM_FAST_BALL 56
+#define ITEM_HEAVY_BALL 57
+#define ITEM_LOVE_BALL 58
+#define ITEM_ZOO_BALL 59
 #define ITEM_03C 60
 #define ITEM_03D 61
 #define ITEM_03E 62

@@ -251,6 +251,47 @@ static const u8 sGreenShardDesc[] = _(
     "ancient item. Can\n"
     "be sold cheaply.");
 
+// Apricorn Pokéballs
+static const u8 sLevelBallDesc[] = _(
+    "A BALL that works\n"
+    "well on POKéMON\n"
+    "with a lower level.");
+
+static const u8 sLureBallDesc[] = _(
+    "A BALL popular with\n"
+    "POKéMON TRAINERS\n"
+    "who like to fish.");
+
+static const u8 sMoonBallDesc[] = _(
+    "A BALL that has\n"
+    "traits reminiscent\n"
+    "of the Moon.");
+
+static const u8 sFriendBallDesc[] = _(
+    "A BALL that helps\n"
+    "convey a TRAINER'S\n"
+    "friendly nature.");
+
+static const u8 sFastBallDesc[] = _(
+    "A BALL that works\n"
+    "better on faster\n"
+    "POKéMON.");
+
+static const u8 sHeavyBallDesc[] = _(
+    "A BALL that works\n"
+    "better on very\n"
+    "heavy POKéMON.");
+
+static const u8 sLoveBallDesc[] = _(
+    "A BALL that works\n"
+    "well if your POKéMON\n"
+    "charms the other.");
+
+static const u8 sZooBallDesc[] = _(
+    "A FREE BALL from\n"
+    "the VALLEY ZOO on\n"
+    "MEMBER CATCH days!");
+
 // Vitamins
 static const u8 sHPUpDesc[] = _(
     "Raises the base HP\n"

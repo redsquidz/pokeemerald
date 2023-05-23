@@ -10,6 +10,7 @@
 #include "strings.h"
 #include "load_save.h"
 #include "item_use.h"
+#include "pokeball.h"
 #include "battle_pyramid.h"
 #include "battle_pyramid_bag.h"
 #include "constants/items.h"
@@ -83,13 +84,19 @@ void CopyItemName(u16 itemId, u8 *dst)
 
 void CopyItemNameHandlePlural(u16 itemId, u8 *dst, u32 quantity)
 {
-    if (itemId == ITEM_POKE_BALL)
+    if (IS_ITEM_BALL(itemId) && quantity >= 2)
+    {
+        dst = StringCopy(dst, ItemId_GetName(itemId));
+        *(dst++) = CHAR_S;
+        *dst = EOS;
+    }
+    /*if (itemId == ITEM_POKE_BALL)
     {
         if (quantity < 2)
             StringCopy(dst, ItemId_GetName(ITEM_POKE_BALL));
         else
             StringCopy(dst, gText_PokeBalls);
-    }
+    }*/
     else
     {
         if (itemId >= FIRST_BERRY_INDEX && itemId <= LAST_BERRY_INDEX)
