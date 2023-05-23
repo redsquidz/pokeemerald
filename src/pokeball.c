@@ -63,7 +63,7 @@ static u16 GetBattlerPokeballItemId(u8 battlerId);
 #define GFX_TAG_LOVE_BALL    55016
 #define GFX_TAG_FAST_BALL    55017
 #define GFX_TAG_HEAVY_BALL   55018
-#define GFX_TAG_ZOO_BALL     55019 //smokescreen uses this, but shouldn't conflict
+#define GFX_TAG_ZOO_BALL     55019 //smokescreen uses this, but shouldn't conflict. It's shared in vanilla too
 
 const struct CompressedSpriteSheet gBallSpriteSheets[POKEBALL_COUNT] =
 {

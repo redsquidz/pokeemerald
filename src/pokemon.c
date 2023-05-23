@@ -3874,7 +3874,7 @@ u32 GetBoxMonData(struct BoxPokemon *boxMon, s32 field, u8 *data)
         break;
     case MON_DATA_POKEBALL:
         if(substruct0->otherBall != 0)
-            retVal = BALL_LEVEL + substruct0->otherBall - 1; //apricorns
+            retVal = BALL_LEVEL + substruct0->otherBall - 1; //Other balls outside of main group
         else
             retVal = substruct3->pokeball;
         break;
@@ -4040,7 +4040,7 @@ u32 GetBoxMonData(struct BoxPokemon *boxMon, s32 field, u8 *data)
         }
         break;
     case MON_DATA_OTHER_BALL:
-        retVal = substruct0->otherBall;
+        retVal = substruct0->otherBall; //modifications in this file adopted from Crystal Dust apricorn balls
         break;
     default:
         break;

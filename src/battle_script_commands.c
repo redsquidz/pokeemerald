@@ -844,7 +844,7 @@ static const u8 sTerrainToType[] =
     [BATTLE_TERRAIN_PLAIN]      = TYPE_NORMAL,
 };
 
-// - Ultra Ball skips Master Ball and ITEM_NONE
+// This basically just assigns catch bonuses for Great, Poke, Safari, Ultra since they're not in cmd_handleballthrow
 static const u8 sBallCatchBonuses[] =
 {
     [ULTRA_BALL_2ID - ULTRA_BALL_2ID]  = 20,

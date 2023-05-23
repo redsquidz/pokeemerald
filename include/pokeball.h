@@ -1,6 +1,7 @@
 #ifndef GUARD_POKEBALL_H
 #define GUARD_POKEBALL_H
 
+//This is what the 2IDs are converted to for the rest of the ball handling. Order is likely important, haven't tested.
 enum BallGraphics{
     BALL_POKE,
     BALL_GREAT,
@@ -33,8 +34,7 @@ enum {
     BALL_AFFINE_ANIM_4
 };
 
-//#define IS_ITEM_BALL(x) ((x) <= ITEM_PREMIER_BALL || ((x) >= ITEM_LEVEL_BALL && (x) <= ITEM_ZOO_BALL))
-//#define ITEM_ID_TO_BALL_ID(x) (((x) >= ITEM_LEVEL_BALL && (x) <= ITEM_ZOO_BALL) ? (((x) - ITEM_LEVEL_BALL) + BALL_LEVEL) : (x))
+//These two functions are modified from Crystal Dust for more general use
 #define IS_ITEM_BALL(x) (ItemId_GetPocket(x) == POCKET_POKE_BALLS)
 #define ITEM_ID_TO_BALL_ID(x) ((ItemId_GetPocket(x) == POCKET_POKE_BALLS) ? ItemId_GetSecondaryId(x) : (x))
 

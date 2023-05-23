@@ -679,7 +679,7 @@ const struct Item gItems[] =
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
     },
 
-// Apricorn Balls
+// Other Balls
 
     [ITEM_LEVEL_BALL] =
     {

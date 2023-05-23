@@ -305,7 +305,7 @@ static const u8 sBallParticleAnimNums[POKEBALL_COUNT] =
     [BALL_TIMER]   = 5,
     [BALL_LUXURY]  = 4,
     [BALL_PREMIER] = 4,
-    [BALL_LEVEL]   = 0, //apricorn
+    [BALL_LEVEL]   = 0, //other balls
     [BALL_LURE]    = 0,
     [BALL_MOON]    = 0,
     [BALL_FRIEND]  = 0,
@@ -450,7 +450,7 @@ static const struct SpriteTemplate sBallParticleSpriteTemplates[POKEBALL_COUNT] 
         .callback = SpriteCallbackDummy,
     },
 
-    //apricorn
+    //Other balls
     [BALL_LEVEL] = {
         .tileTag = TAG_PARTICLES_LEVELBALL,
         .paletteTag = TAG_PARTICLES_LEVELBALL,
@@ -541,7 +541,7 @@ const u16 gBallOpenFadeColors[] =
     [BALL_TIMER] = RGB(29, 30, 30),
     [BALL_LUXURY] = RGB(31, 17, 10),
     [BALL_PREMIER] = RGB(31, 9, 10),
-    //apricorns
+    //other balls
     [BALL_LEVEL] = RGB(31, 23, 23),
     [BALL_LURE] = RGB(8, 16, 30),
     [BALL_MOON] = RGB(19, 28, 22),
@@ -893,8 +893,11 @@ void AnimTask_IsBallBlockedByTrainer(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
-u8 ItemIdToBallId(u16 ballItem)
-{
+u8 ItemIdToBallId(u16 ballItem){
+//This converts from the Secondary ID to the "graphics" ID for the rest of the ball handling.
+//It seems items.h hates enums but everywhere else loves them so that's the point of having two IDs,
+//as far as I can tell.
+//See "include/pokeball.h"
     switch (ballItem){
         case MASTER_BALL_2ID:
             return BALL_MASTER;
@@ -938,34 +941,6 @@ u8 ItemIdToBallId(u16 ballItem)
         default:
             return BALL_POKE;
     }
-    /*switch (ballItem)
-    {
-    case ITEM_MASTER_BALL:
-        return BALL_MASTER;
-    case ITEM_ULTRA_BALL:
-        return BALL_ULTRA;
-    case ITEM_GREAT_BALL:
-        return BALL_GREAT;
-    case ITEM_SAFARI_BALL:
-        return BALL_SAFARI;
-    case ITEM_NET_BALL:
-        return BALL_NET;
-    case ITEM_DIVE_BALL:
-        return BALL_DIVE;
-    case ITEM_NEST_BALL:
-        return BALL_NEST;
-    case ITEM_REPEAT_BALL:
-        return BALL_REPEAT;
-    case ITEM_TIMER_BALL:
-        return BALL_TIMER;
-    case ITEM_LUXURY_BALL:
-        return BALL_LUXURY;
-    case ITEM_PREMIER_BALL:
-        return BALL_PREMIER;
-    case ITEM_POKE_BALL:
-    default:
-        return BALL_POKE;
-    }*/
 }
 
 #define tSpriteId data[0]

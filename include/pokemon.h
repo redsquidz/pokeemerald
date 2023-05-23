@@ -105,7 +105,7 @@ struct PokemonSubstruct0
     u32 experience;
     u8 ppBonuses;
     u8 friendship;
-    u16 otherBall:4;
+    u16 otherBall:4; //Not sure what this does, but this & filler (below) are written how Crystal Dust has them
     u16 filler:11;
 };
 

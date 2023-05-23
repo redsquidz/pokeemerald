@@ -39,6 +39,13 @@
 #define LOVE_BALL_2ID 19
 #define ZOO_BALL_2ID 20
 
+// Easy_Pokeball: Add SecondaryIDs above, don't worry about the below note with FIRST_BALL and LAST_BALL as it breaks doing this.
+// These 2IDs are just used in Cmd_HandleBallThrow in battle_script_commands.c and are later converted
+// in ItemIdToBallId in battle_anim_throw.c
+// The "ZOO_BALL" replaces the PARK_BALL in my hack. If adding another cluster of ITEM_BALLs elsewhere, some references may need to be modified.
+// EX: The Level Ball is used as a reference point several times in other files
+// Useful search keywords: "other ball", "ITEM_ID_TO_BALL_ID", "IS_ITEM_BALL", "MON_DATA_OTHER_BALL", "otherBall", "BallGraphics", "BALL_LEVEL"
+
 // Note: If moving ball IDs around, updating FIRST_BALL/LAST_BALL is not sufficient
 //       Several places expect the ball IDs to be first and contiguous (e.g. gBattlescriptsForBallThrow and MON_DATA_POKEBALL)
 //       If adding new balls, it's easiest to insert them after the last ball and increment the below IDs (and removing ITEM_034 for example)
