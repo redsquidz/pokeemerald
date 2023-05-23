@@ -284,8 +284,8 @@ static const u8 sHeavyBallDesc[] = _(
 
 static const u8 sLoveBallDesc[] = _(
     "A BALL that works\n"
-    "better if your\n"
-    "POKéMON can charm.");
+    "well if your POKéMON\n"
+    "charms the other.");
 
 static const u8 sZooBallDesc[] = _(
     "A FREE BALL from\n"
