@@ -4,7 +4,7 @@ OldaleTown_Mart_MapScripts::
 OldaleTown_Mart_EventScript_Clerk::
 	lock
 	faceplayer
-	clearflag FLAG_TOO_HUNGRY
+	clearflag FLAG_HUNGRY @hunger
 	message gText_HowMayIServeYou
 	waitmessage
 	goto_if_set FLAG_ADVENTURE_STARTED, OldaleTown_Mart_ExpandedItems

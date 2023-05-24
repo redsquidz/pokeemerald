@@ -593,7 +593,7 @@ extern const u8 EventScript_SelectWithoutRegisteredItem[];
 // overworld
 extern const u8 EventScript_StepStart[];
 extern const u8 EventScript_StepStop[];
-extern const u8 EventScript_Text_TooHungry[];
+extern const u8 EventScript_Text_TooHungry[]; //hunger
 extern const u8 EventScript_WhiteOut[];
 extern const u8 EventScript_ResetMrBriney[];
 extern const u8 EventScript_DoLinkRoomExit[];

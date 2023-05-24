@@ -1032,6 +1032,7 @@ LittlerootTown_EventScript_TestMart::
 	.align 2
 LittlerootTown_TestMart:
 	.2byte ITEM_POKE_BALL
+	.2byte ITEM_LEVEL_BALL
 	.2byte ITEM_ZOO_BALL
 	.2byte ITEM_LOVE_BALL
 	.2byte ITEM_LURE_BALL

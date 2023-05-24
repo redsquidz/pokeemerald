@@ -16,7 +16,7 @@
 #include "field_screen_effect.h"
 #include "field_specials.h"
 #include "field_weather.h"
-#include "flags.h"
+#include "constants/flags.h"
 #include "graphics.h"
 #include "international_string_util.h"
 #include "item_icon.h"

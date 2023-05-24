@@ -1456,7 +1456,7 @@
 #define FLAG_SYS_CTRL_OBJ_DELETE                    (SYSTEM_FLAGS + 0x61)
 #define FLAG_SYS_RESET_RTC_ENABLE                   (SYSTEM_FLAGS + 0x62)
 
-#define FLAG_TOO_HUNGRY                             (SYSTEM_FLAGS + 0x2E) // Too Hungry Flag
+#define FLAG_HUNGRY                                 (SYSTEM_FLAGS + 0x2E) // "Too Hungry" Hunger Flag
 #define FLAG_STARVING                               (SYSTEM_FLAGS + 0x2F) // Starving Flag
 
 #define FLAG_LANDMARK_BERRY_MASTERS_HOUSE           (SYSTEM_FLAGS + 0x63)
