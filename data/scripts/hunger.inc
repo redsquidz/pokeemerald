@@ -3,11 +3,10 @@ EventScript_Hunger::
     releaseall
     end
 
-
-
 EventScript_StepStart::
+	clearflag FLAG_HUNGRY
 	setflag FLAG_SYS_B_DASH
-	setvar VAR_HOW_MANY_STEPS, 25
+	setvar VAR_HOW_MANY_STEPS, 50
     buffernumberstring STR_VAR_1, VAR_HOW_MANY_STEPS
 	msgbox gText_StepStart, MSGBOX_DEFAULT
 	release
@@ -16,6 +15,7 @@ EventScript_StepStart::
 EventScript_StepStop::
 	lockall
 	setflag FLAG_HUNGRY
+	setflag FLAG_STARVING
 	msgbox gText_StepStop, MSGBOX_DEFAULT
 	@msgbox gText_Too_Hungry, MSGBOX_AUTOCLOSE
 	release

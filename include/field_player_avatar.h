@@ -11,6 +11,7 @@ void PlayerGetDestCoords(s16 *, s16 *);
 u8 GetPlayerFacingDirection(void);
 u8 GetPlayerMovementDirection(void);
 u8 PlayerGetCopyableMovement(void);
+void PlayerWalkSlow(u8 direction);
 void PlayerWalkNormal(u8 direction);
 void PlayerWalkFast(u8 direction);
 void PlayerRideWaterCurrent(u8 direction);

@@ -113,7 +113,7 @@ void TryFieldPoisonWhiteOut(void)
     ScriptContext_Stop();
 }
 
-s32 DoPoisonFieldEffect(void)
+u32 DoPoisonFieldEffect(void)
 {
     int i;
     u32 hp;
@@ -137,7 +137,7 @@ s32 DoPoisonFieldEffect(void)
     }
 
     // Do screen flash effect
-    if (numFainted != 0 || numPoisoned != 0)
+    if (numFainted != 0 || numPoisoned != 0 || FlagGet(FLAG_STARVING) != 0)
         FldEffPoison_Start();
 
     if (numFainted != 0)

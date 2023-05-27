@@ -7,6 +7,8 @@
 #include "field_camera.h"
 #include "field_effect.h"
 #include "field_effect_helpers.h"
+#include "field_poison.h"
+#include "fldeff_misc.h"
 #include "field_player_avatar.h"
 #include "fieldmap.h"
 #include "menu.h"
@@ -640,15 +642,19 @@ static void PlayerNotOnBikeMoving(u8 direction, u16 heldKeys)
     {
         if (FlagGet(FLAG_HUNGRY)){ //Hunger
             PlaySE(SE_WALL_HIT);
-            PlayerWalkNormal(direction);
             return;
         }
-
 
         PlayerRun(direction);
         gPlayerAvatar.flags |= PLAYER_AVATAR_FLAG_DASH;
         return;
     }
+    if (FlagGet(FLAG_STARVING)){
+        PlayerWalkSlow(direction);
+        //DoPoisonFieldEffect();
+        return;
+    }
+
     else
     {
         PlayerWalkNormal(direction);
@@ -957,6 +963,11 @@ void PlayerSetAnimId(u8 movementActionId, u8 copyableMovement)
         PlayerSetCopyableMovement(copyableMovement);
         ObjectEventSetHeldMovement(&gObjectEvents[gPlayerAvatar.objectEventId], movementActionId);
     }
+}
+
+void PlayerWalkSlow(u8 direction)
+{
+    PlayerSetAnimId(GetWalkSlowMovementAction(direction), COPY_MOVE_WALK);
 }
 
 void PlayerWalkNormal(u8 direction)

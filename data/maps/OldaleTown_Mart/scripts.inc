@@ -4,7 +4,6 @@ OldaleTown_Mart_MapScripts::
 OldaleTown_Mart_EventScript_Clerk::
 	lock
 	faceplayer
-	clearflag FLAG_HUNGRY @hunger
 	message gText_HowMayIServeYou
 	waitmessage
 	goto_if_set FLAG_ADVENTURE_STARTED, OldaleTown_Mart_ExpandedItems
@@ -36,9 +35,6 @@ OldaleTown_Mart_Pokemart_Expanded:
 	.2byte ITEM_ANTIDOTE
 	.2byte ITEM_PARALYZE_HEAL
 	.2byte ITEM_AWAKENING
-	.2byte ITEM_REPEL
-	.2byte ITEM_SUPER_REPEL
-	.2byte ITEM_MAX_REPEL
 	.2byte ITEM_NONE
 	release
 	end
