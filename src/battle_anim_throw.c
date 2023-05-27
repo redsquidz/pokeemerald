@@ -260,6 +260,24 @@ static const union AnimCmd sAnim_UltraRepeatTimerBall[] =
     ANIMCMD_END,
 };
 
+static const union AnimCmd gAnim_LevelBallBlue[] =
+{
+    ANIMCMD_FRAME(8, 4),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd gAnim_LevelBallGreen[] =
+{
+    ANIMCMD_FRAME(9, 4),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd gAnim_LevelBallRed[] =
+{
+    ANIMCMD_FRAME(10, 4),
+    ANIMCMD_END,
+};
+
 static const union AnimCmd *const sAnims_BallParticles[] =
 {
     sAnim_RegularBall,
@@ -268,8 +286,11 @@ static const union AnimCmd *const sAnims_BallParticles[] =
     sAnim_NestBall,
     sAnim_LuxuryPremierBall,
     sAnim_UltraRepeatTimerBall,
+    gAnim_LevelBallGreen,
 };
 
+//These correspond to the sAnim_ list above. Level Ball union is a lot farther on where it was originally pasted
+//so the green ball could be used for Zoo
 static const u8 sBallParticleAnimNums[POKEBALL_COUNT] =
 {
     [BALL_POKE]    = 0,
@@ -291,7 +312,7 @@ static const u8 sBallParticleAnimNums[POKEBALL_COUNT] =
     [BALL_LOVE]    = 3,
     [BALL_FAST]    = 0,
     [BALL_HEAVY]   = 0,
-    [BALL_ZOO]     = 0,
+    [BALL_ZOO]     = 6,
 };
 
 static const TaskFunc sBallParticleAnimationFuncs[POKEBALL_COUNT] =
@@ -2136,23 +2157,7 @@ static void PremierBallOpenParticleAnimation_Step1(struct Sprite *sprite)
 }
 
 
-static const union AnimCmd gAnim_LevelBallBlue[] =
-{
-    ANIMCMD_FRAME(8, 4),
-    ANIMCMD_END,
-};
 
-static const union AnimCmd gAnim_LevelBallGreen[] =
-{
-    ANIMCMD_FRAME(9, 4),
-    ANIMCMD_END,
-};
-
-static const union AnimCmd gAnim_LevelBallRed[] =
-{
-    ANIMCMD_FRAME(10, 4),
-    ANIMCMD_END,
-};
 
 static const union AnimCmd *const sAnims_LevelBallParticles[] =
 {
