@@ -5147,6 +5147,8 @@ static void FreeResetData_ReturnToOvOrDoEvolutions(void)
     }
 }
 
+//static void EvolveMachokeGraveller(void) // combo evo
+
 static void TryEvolvePokemon(void)
 {
     s32 i;
@@ -5167,7 +5169,7 @@ static void TryEvolvePokemon(void)
                 if (species != SPECIES_NONE)
                 {
                     FreeAllWindowBuffers();
-                    gBattleMainFunc = WaitForEvoSceneToFinish;
+                    gBattleMainFunc = WaitForEvoSceneToFinish; // combo create force evo for machoke/graveller
                     EvolutionScene(&gPlayerParty[i], species, TRUE, i);
                     return;
                 }

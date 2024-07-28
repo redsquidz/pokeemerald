@@ -8,6 +8,7 @@
 #include "evolution_scene.h"
 #include "evolution_graphics.h"
 #include "gpu_regs.h"
+#include "item.h"
 #include "link.h"
 #include "link_rfu.h"
 #include "m4a.h"
@@ -18,6 +19,7 @@
 #include "pokedex.h"
 #include "pokemon.h"
 #include "pokemon_summary_screen.h"
+#include "pokemon_storage_system.h"
 #include "scanline_effect.h"
 #include "sound.h"
 #include "sprite.h"
@@ -35,6 +37,7 @@
 #include "constants/items.h"
 
 extern struct Evolution gEvolutionTable[][EVOS_PER_MON];
+extern struct Evolution gComboEvolutionTable[][PARTY_SIZE - 1];
 
 struct EvoInfo
 {
@@ -66,6 +69,7 @@ static void StartBgAnimation(bool8 isLink);
 static void StopBgAnimation(void);
 static void Task_AnimateBg(u8 taskId);
 static void RestoreBgAfterAnim(void);
+static void ComboEvolutionFuseMons(u32 species, u32 monIndex);
 
 static const u16 sUnusedPal1[] = INCBIN_U16("graphics/evolution_scene/unused_1.gbapal");
 static const u32 sBgAnim_Gfx[] = INCBIN_U32("graphics/evolution_scene/bg.4bpp.lz");
@@ -810,9 +814,11 @@ static void Task_EvolutionScene(u8 taskId)
                 StopMapMusic();
                 Overworld_PlaySpecialMapMusic();
             }
-            if (!gTasks[taskId].tEvoWasStopped)
+            if (!gTasks[taskId].tEvoWasStopped){
                 CreateShedinja(gTasks[taskId].tPreEvoSpecies, mon);
-
+                ComboEvolutionFuseMons(gTasks[taskId].tPreEvoSpecies, gTasks[taskId].tPartyId);
+                //do gravellermachoke combo
+            }
             DestroyTask(taskId);
             FreeMonSpritesGfx();
             FREE_AND_SET_NULL(sEvoStructPtr);
@@ -1682,4 +1688,56 @@ static bool32 EvoScene_IsMonAnimFinished(u8 monSpriteId)
         return TRUE;
 
     return FALSE;
+}
+
+static void ComboEvolutionFuseMons(u32 species, u32 monIndex){
+    // 1) Check what pokemon fuse
+    // 2) Find first qualified mon(s) in party & mark for fusing
+    // 3) Fuse!! (remove them from their original party slots & add items to bag)
+    // To Do: Have fused evolution learn all moves
+
+    u32 i, j, Qty;
+    bool32 PartyFuseMons[PARTY_SIZE];
+
+    //init vars
+    for (i = 0; i < PARTY_SIZE; i++)
+        PartyFuseMons[i] = FALSE;
+
+    // Check fusing mons
+    for (i = 0; i < PARTY_SIZE - 1; i++){
+
+        Qty = 0;    
+
+        // if method is assist or blank, keep checking
+        if (gComboEvolutionTable[species][i].method != COMBO_FUSE)
+            continue;
+
+        // Find mon in party (make this a separate function!)
+        for (j = 0; j < PARTY_SIZE; j++){
+            
+            // don't go fuse yourself / don't fuse again
+            if (j == monIndex || PartyFuseMons[j] == TRUE)
+                continue;
+
+            if (Qty == gComboEvolutionTable[species][i].param)
+                break;
+
+            // mark mons for fusing and check there's enough
+            if (GetMonData(&gPlayerParty[j], MON_DATA_SPECIES) == gComboEvolutionTable[species][i].targetSpecies){
+                //&& Qty < gComboEvolutionTable[species][i].param){
+                PartyFuseMons[j] = TRUE;
+                Qty++;
+            }
+        }
+    }
+
+    // Fuse!
+    for (i = 0; i < PARTY_SIZE; i++){
+        if (PartyFuseMons[i] == TRUE){
+            AddBagItem(GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM, 0), 1);
+            ZeroMonData(&gPlayerParty[i]);
+        }
+    }
+    CompactPartySlots();
+    CalculatePlayerPartyCount();
 }

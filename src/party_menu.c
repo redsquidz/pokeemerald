@@ -232,6 +232,7 @@ EWRAM_DATA u8 gBattlePartyCurrentOrder[PARTY_SIZE / 2] = {0}; // bits 0-3 are th
 
 // IWRAM common
 void (*gItemUseCB)(u8, TaskFunc);
+extern struct Evolution gEvolutionTable[][PARTY_SIZE - 1];
 
 static void ResetPartyMenu(void);
 static void CB2_InitPartyMenu(void);
@@ -3887,6 +3888,8 @@ void CB2_ReturnToPartyMenuFromFlyMap(void)
     InitPartyMenu(PARTY_MENU_TYPE_FIELD, PARTY_LAYOUT_SINGLE, PARTY_ACTION_CHOOSE_MON, TRUE, PARTY_MSG_CHOOSE_MON, Task_HandleChooseMonInput, CB2_ReturnToFieldWithOpenMenu);
 }
 
+//void CB2_ReturnToPartyMenuFromMachokeGraveller(void){ // combo
+
 static void FieldCallback_Waterfall(void)
 {
     gFieldEffectArguments[0] = GetCursorSelectionMonId();
@@ -5090,7 +5093,19 @@ static void Task_TryLearningNextMove(u8 taskId)
     }
 }
 
-static void PartyMenuTryEvolution(u8 taskId)
+static const u8 sText_CanComboEvolve[] = _("{STR_VAR_1} is ready to evolve!\nBut it needs help from another POKéMON.{PAUSE_UNTIL_PRESS}");
+
+static void Task_DisplayCanComboEvolveMessage(u8 taskId){
+
+    GetMonNickname(&gPlayerParty[gPartyMenu.slotId], gStringVar1);
+    StringExpandPlaceholders(gStringVar4, sText_CanComboEvolve);
+    DisplayPartyMenuMessage(gStringVar4, FALSE);
+    ScheduleBgCopyTilemapToVram(2);
+    gTasks[taskId].func = Task_ClosePartyMenuAfterText;
+}
+
+
+static void PartyMenuTryEvolution(u8 taskId) // combo
 {
     struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
     u16 targetSpecies = GetEvolutionTargetSpecies(mon, EVO_MODE_NORMAL, ITEM_NONE);
@@ -5098,10 +5113,25 @@ static void PartyMenuTryEvolution(u8 taskId)
     if (targetSpecies != SPECIES_NONE)
     {
         FreePartyPointers();
+
+        if (targetSpecies == SPECIES_MACHAMP || targetSpecies == SPECIES_GOLEM){ // combo
+            //gPartyMenu.exitCallback = CB2_ReturnToPartyMenuFromMachokeGraveller
+
+        };
+
         gCB2_AfterEvolution = gPartyMenu.exitCallback;
         BeginEvolutionScene(mon, targetSpecies, TRUE, gPartyMenu.slotId);
         DestroyTask(taskId);
     }
+    else if (gEvolutionTable[GetMonData(mon, MON_DATA_SPECIES)][0].method == EVO_COMBO
+        && !ComboParameterPartyCheck(GetMonData(mon, MON_DATA_SPECIES))){
+            
+            Task_DisplayCanComboEvolveMessage(taskId);
+        //    GetMonNickname(mon, gStringVar1);
+        //    StringExpandPlaceholders(gStringVar4, sText_CanComboEvolve);
+        //    DisplayPartyMenuMessage(gStringVar4, TRUE);
+        //    ScheduleBgCopyTilemapToVram(2);
+        }
     else
     {
         gTasks[taskId].func = Task_ClosePartyMenuAfterText;

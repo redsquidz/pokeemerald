@@ -250,6 +250,12 @@
 #define EVO_LEVEL_NINJASK    13 // Pokémon reaches the specified level (special value for Ninjask)
 #define EVO_LEVEL_SHEDINJA   14 // Pokémon reaches the specified level (special value for Shedinja)
 #define EVO_BEAUTY           15 // Pokémon levels up with beauty ≥ specified value
+#define EVO_COMBO            16 // Pokémon reaches the specified level and other mon(s) specified in gComboEvolutionTable are present 
+#define EVO_COMBO_ITEM       17 // Pokémon levels up with the specified item while other mon(s) specified in gComboEvolutionTable are present
+
+// Combo Evolution Types
+#define COMBO_FUSE           1  // Pokémon fuses with one or more other mon in player's party
+#define COMBO_ASSIST         2  // Pokémon requires presence of other mon at specified level in player's party
 
 #define EVOS_PER_MON 5
 

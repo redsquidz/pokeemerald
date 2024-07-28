@@ -29,6 +29,7 @@
 #include "recorded_battle.h"
 #include "rtc.h"
 #include "sound.h"
+#include "script_pokemon_util.h"
 #include "string_util.h"
 #include "strings.h"
 #include "task.h"
@@ -5549,6 +5550,11 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 mode, u16 evolutionItem)
                 if (gEvolutionTable[species][i].param <= beauty)
                     targetSpecies = gEvolutionTable[species][i].targetSpecies;
                 break;
+            case EVO_COMBO: // combo evo
+                if (gEvolutionTable[species][i].param <= level && ComboParameterPartyCheck(species))
+                    targetSpecies = gEvolutionTable[species][i].targetSpecies;
+
+                break;
             }
         }
         break;
@@ -7133,3 +7139,53 @@ u8 *MonSpritesGfxManager_GetSpritePtr(u8 managerId, u8 spriteNum)
         return gfx->spritePointers[spriteNum];
     }
 }
+
+bool32 ComboParameterPartyCheck(u16 species){
+
+    u32 i, j;
+    u16 heldItem; // = GetMonData(mon, MON_DATA_HELD_ITEM, 0);
+    u16 comboSpecies;
+    u32 QtyFuseMons;
+    bool32 pass;
+
+    QtyFuseMons = 0;
+
+    for (i = 0; i < PARTY_SIZE - 1; i++){
+
+        pass = FALSE;
+        comboSpecies = gComboEvolutionTable[species][i].targetSpecies;
+
+        switch (gComboEvolutionTable[species][i].method){
+
+            case COMBO_FUSE:
+                for (j = 0; j < PARTY_SIZE; j++){
+                    if (DoesPartyHaveMon(comboSpecies, 0, 0, j)){
+                        j = DoesPartyHaveMon(comboSpecies, 0, 0, j) - 1;
+                        QtyFuseMons++;
+                    }
+                }
+
+                if (comboSpecies == species)
+                    QtyFuseMons--;
+
+                if (QtyFuseMons >= gComboEvolutionTable[species][i].param)
+                    pass = TRUE;
+
+                break;
+            case COMBO_ASSIST:               
+                if (DoesPartyHaveMon(comboSpecies, gComboEvolutionTable[species][i].param, 0, 0))
+                    pass = TRUE;
+
+                break;
+            default:
+                pass = TRUE;
+                break;
+        }
+
+        if (pass == FALSE)
+            break;
+    }
+
+    return pass;
+
+} // combo evo

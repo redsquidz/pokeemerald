@@ -134,6 +134,27 @@ bool8 DoesPartyHaveEnigmaBerry(void)
     return hasItem;
 }
 
+// Returns FALSE or pos of mon. Level and item args are optional, set 0 to ignore
+u32 DoesPartyHaveMon(u16 mon, u8 level, u16 item, u32 startspot){
+
+    u32 i;
+
+    for(i = startspot; i < PARTY_SIZE; i++){
+
+        u16 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
+        u8 islevel = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL);
+        u16 hasitem = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
+
+        if (species != SPECIES_NONE && species != SPECIES_EGG && species == mon &&
+            (level == 0 || islevel >= level) &&
+            (item == ITEM_NONE || hasitem == item))
+
+            return i + 1;
+    }
+
+    return FALSE;
+}
+
 void CreateScriptedWildMon(u16 species, u8 level, u16 item)
 {
     u8 heldItem[2];
