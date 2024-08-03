@@ -3007,6 +3007,67 @@ void GiveBoxMonInitialMoveset(struct BoxPokemon *boxMon)
     }
 }
 
+u16 MonTryLearningComboMove(struct Pokemon *mon, bool32 *PartyFuseMons, u32 monIndex, bool32 firstMove){
+
+    u32 i, j;
+    u32 fuseMons, learnfromMonIndex;
+    u32 retVal = MOVE_NONE;
+    int ComboMon, ComboMonMove;
+
+    fuseMons = 0;
+    ComboMon = sLearningMoveTableID / 4; //This tells us what mon we're currently fusing moves from
+    ComboMonMove = sLearningMoveTableID % 4; //This is move slot factor, will be 0 to 3
+
+    // count number of fuse mons
+    for (i = 0; i < PARTY_SIZE; i++){
+        
+        if (PartyFuseMons[i] == TRUE && i != monIndex)
+            fuseMons++;
+        
+        // Above, fuse mons are counted.
+        // If the count is equal to the current mon we're learning moves from, bookmark the partyId for learning moves below
+        if (fuseMons == ComboMon + 1) // offset by 1 cuz ComboMon is zero indexed
+            learnfromMonIndex = i;
+    }
+
+    // This shouldn't effect things aside from clearing junk
+    if (firstMove)
+        sLearningMoveTableID = 0;
+
+    // Quit if all fuse mons moves have been attempted
+    if (sLearningMoveTableID == fuseMons * 4)
+        return MOVE_NONE;
+        
+    // scan party for fuse mons, starting at bookmarked party spot
+    /*i = fuseScanStart;
+    while (i < PARTY_SIZE){
+                
+        // if not fuse mon, continue scan. Otherwise, try to learn their move!
+        if (PartyFuseMons[i] != TRUE || i == monIndex){
+            i++;
+            continue;
+        }
+        else {
+    */
+    gMoveToLearn = GetMonData(&gPlayerParty[learnfromMonIndex], MON_DATA_MOVE1 + ComboMonMove);
+
+    // if they're missing a move, assume rest are empty and bail on this learn attempt & fuse mon
+    if (gMoveToLearn == MOVE_NONE){
+
+        sLearningMoveTableID += 4 - ComboMonMove;
+        return MON_ALREADY_KNOWS_MOVE;
+    }
+
+    // otherwise return the move and increment to the next row in our imaginary move table 
+    retVal = GiveMoveToMon(mon, gMoveToLearn);
+    sLearningMoveTableID++;           
+        //}
+    //}
+
+    return retVal;
+
+} // combo
+
 u16 MonTryLearningNewMove(struct Pokemon *mon, bool8 firstMove)
 {
     u32 retVal = MOVE_NONE;
@@ -3021,6 +3082,7 @@ u16 MonTryLearningNewMove(struct Pokemon *mon, bool8 firstMove)
     {
         sLearningMoveTableID = 0;
 
+        //advance until you hit current level, or if you find there's no moves first quit
         while ((gLevelUpLearnsets[species][sLearningMoveTableID] & LEVEL_UP_MOVE_LV) != (level << 9))
         {
             sLearningMoveTableID++;

@@ -545,5 +545,6 @@ struct MonSpritesGfxManager *CreateMonSpritesGfxManager(u8 managerId, u8 mode);
 void DestroyMonSpritesGfxManager(u8 managerId);
 u8 *MonSpritesGfxManager_GetSpritePtr(u8 managerId, u8 spriteNum);
 bool32 ComboParameterPartyCheck(u16 species);
+u16 MonTryLearningComboMove(struct Pokemon *mon, bool32 *PartyFuseMons, u32 monIndex, bool32 firstMove);
 
 #endif // GUARD_POKEMON_H

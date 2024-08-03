@@ -5,6 +5,8 @@ void BeginEvolutionScene(struct Pokemon *mon, u16 speciesToEvolve, bool8 canStop
 void EvolutionScene(struct Pokemon *mon, u16 speciesToEvolve, bool8 canStopEvo, u8 partyID);
 void TradeEvolutionScene(struct Pokemon *mon, u16 speciesToEvolve, u8 preEvoSpriteID, u8 partyID);
 
+void FindPartyFuseMons(bool32 *PartyFuseMons, u32 species, u32 monIndex);
+
 extern void (*gCB2_AfterEvolution)(void);
 
 #endif // GUARD_EVOLUTION_SCENE_H

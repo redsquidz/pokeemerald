@@ -399,7 +399,11 @@ OldaleTown_Text_TownSign:
 	.string "OLDALE TOWN\n"
 	.string "“Where things start off scarce.”$"
 
-Oldale_Give_Mon::
-	givemon SPECIES_MAGNEMITE, 30
-	giveitem ITEM_RARE_CANDY, 10
-	goto OldaleTown_EventScript_TownSign
+Oldale_Give_Candy::
+	finditem ITEM_RARE_CANDY, 10
+	end
+
+Oldale_Give_SlowBro::
+	givemon SPECIES_SLOWPOKE, 36
+	givemon SPECIES_SHELLDER, 17
+	end

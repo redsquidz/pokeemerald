@@ -168,6 +168,8 @@ static void CB2_BeginEvolutionScene(void)
 #define tLearnMoveNoState   data[8]
 #define tEvoWasStopped      data[9]
 #define tPartyId            data[10]
+#define tModeLearnComboMove data[11]
+#define tTimer              data[12]
 
 #define TASK_BIT_CAN_STOP       (1 << 0)
 #define TASK_BIT_LEARN_MOVE     (1 << 7)
@@ -301,6 +303,7 @@ void EvolutionScene(struct Pokemon *mon, u16 postEvoSpecies, bool8 canStopEvo, u
     gTasks[id].tLearnsFirstMove = TRUE;
     gTasks[id].tEvoWasStopped = FALSE;
     gTasks[id].tPartyId = partyId;
+    gTasks[id].tModeLearnComboMove = FALSE;
 
     memcpy(&sEvoStructPtr->savedPalette, &gPlttBufferUnfaded[BG_PLTT_ID(2)], sizeof(sEvoStructPtr->savedPalette));
 
@@ -637,6 +640,9 @@ static void Task_EvolutionScene(u8 taskId)
 {
     u32 var;
     struct Pokemon *mon = &gPlayerParty[gTasks[taskId].tPartyId];
+    bool32 PartyFuseMons[PARTY_SIZE];
+    FindPartyFuseMons(PartyFuseMons, gTasks[taskId].tPreEvoSpecies, gTasks[taskId].tPartyId);
+
 
     // check if B Button was held, so the evolution gets stopped
     if (gMain.heldKeys == B_BUTTON
@@ -776,10 +782,17 @@ static void Task_EvolutionScene(u8 taskId)
     case EVOSTATE_TRY_LEARN_MOVE:
         if (!IsTextPrinterActive(0))
         {
-            var = MonTryLearningNewMove(mon, gTasks[taskId].tLearnsFirstMove);
+            if (gTasks[taskId].tModeLearnComboMove == TRUE)
+                var = MonTryLearningComboMove(mon, PartyFuseMons, gTasks[taskId].tPartyId, gTasks[taskId].tLearnsFirstMove);    
+            else {
+                var = MonTryLearningNewMove(mon, gTasks[taskId].tLearnsFirstMove);
+                if (var == MOVE_NONE)
+                    gTasks[taskId].tLearnsFirstMove = TRUE;
+            }
             if (var != MOVE_NONE && !gTasks[taskId].tEvoWasStopped)
             {
                 u8 nickname[POKEMON_NAME_BUFFER_SIZE];
+                //ComboTryLearnMove:
                 if (!(gTasks[taskId].tBits & TASK_BIT_LEARN_MOVE))
                 {
                     StopMapMusic();
@@ -799,6 +812,21 @@ static void Task_EvolutionScene(u8 taskId)
                 else
                     gTasks[taskId].tState = EVOSTATE_LEARNED_MOVE;
             }
+            else if (gEvolutionTable[gTasks[taskId].tPreEvoSpecies][0].method == EVO_COMBO && !gTasks[taskId].tEvoWasStopped)
+            {
+                // MOVE_NONE only returned when through all moves of fuse mons
+                if (var == MOVE_NONE && gTasks[taskId].tModeLearnComboMove == TRUE){
+                    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
+                    gTasks[taskId].tState++;
+                }
+                else
+                //bool32 PartyFuseMons[PARTY_SIZE];
+                //if (var == MOVE_NONE)
+                    gTasks[taskId].tModeLearnComboMove = TRUE;
+                //FindPartyFuseMons(PartyFuseMons, gTasks[taskId].tPreEvoSpecies, gTasks[taskId].tPartyId);
+                //var = MonTryLearningComboMove(mon, PartyFuseMons, gTasks[taskId].tPartyId, gTasks[taskId].tLearnsFirstMove);    
+                //goto ComboTryLearnMove;
+            }
             else // no move to learn, or evolution was canceled
             {
                 BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
@@ -816,7 +844,8 @@ static void Task_EvolutionScene(u8 taskId)
             }
             if (!gTasks[taskId].tEvoWasStopped){
                 CreateShedinja(gTasks[taskId].tPreEvoSpecies, mon);
-                ComboEvolutionFuseMons(gTasks[taskId].tPreEvoSpecies, gTasks[taskId].tPartyId);
+                if (gEvolutionTable[gTasks[taskId].tPreEvoSpecies][0].method == EVO_COMBO)
+                    ComboEvolutionFuseMons(gTasks[taskId].tPreEvoSpecies, gTasks[taskId].tPartyId);
                 //do gravellermachoke combo
             }
             DestroyTask(taskId);
@@ -861,12 +890,12 @@ static void Task_EvolutionScene(u8 taskId)
             PlayFanfare(MUS_LEVEL_UP);
             BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_PKMNLEARNEDMOVE - BATTLESTRINGS_TABLE_START]);
             BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_MSG);
-            gTasks[taskId].tLearnsFirstMove = 0x40; // re-used as a counter
+            gTasks[taskId].tTimer = 0x40;
             gTasks[taskId].tState++;
         }
         break;
     case EVOSTATE_TRY_LEARN_ANOTHER_MOVE:
-        if (!IsTextPrinterActive(0) && !IsSEPlaying() && --gTasks[taskId].tLearnsFirstMove == 0)
+        if (!IsTextPrinterActive(0) && !IsSEPlaying() && --gTasks[taskId].tTimer == 0)
             gTasks[taskId].tState = EVOSTATE_TRY_LEARN_MOVE;
         break;
     case EVOSTATE_REPLACE_MOVE:
@@ -1262,12 +1291,12 @@ static void Task_TradeEvolutionScene(u8 taskId)
             PlayFanfare(MUS_LEVEL_UP);
             BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_PKMNLEARNEDMOVE - BATTLESTRINGS_TABLE_START]);
             DrawTextOnTradeWindow(0, gDisplayedStringBattle, 1);
-            gTasks[taskId].tLearnsFirstMove = 0x40; // re-used as a counter
+            gTasks[taskId].tTimer = 0x40;
             gTasks[taskId].tState++;
         }
         break;
     case T_EVOSTATE_TRY_LEARN_ANOTHER_MOVE:
-        if (!IsTextPrinterActive(0) && IsFanfareTaskInactive() == TRUE && --gTasks[taskId].tLearnsFirstMove == 0)
+        if (!IsTextPrinterActive(0) && IsFanfareTaskInactive() == TRUE && --gTasks[taskId].tTimer == 0)
             gTasks[taskId].tState = T_EVOSTATE_TRY_LEARN_MOVE;
         break;
     case T_EVOSTATE_REPLACE_MOVE:
@@ -1431,6 +1460,8 @@ static void Task_TradeEvolutionScene(u8 taskId)
 #undef tLearnMoveNoState
 #undef tEvoWasStopped
 #undef tPartyId
+#undef tModeLearnComboMove
+#undef tTimer
 
 static void EvoDummyFunc(void)
 {
@@ -1690,6 +1721,42 @@ static bool32 EvoScene_IsMonAnimFinished(u8 monSpriteId)
     return FALSE;
 }
 
+void FindPartyFuseMons(bool32 *PartyFuseMons, u32 species, u32 monIndex){
+
+    u32 i, j, Qty;
+
+    //init vars
+    for (i = 0; i < PARTY_SIZE; i++)
+        PartyFuseMons[i] = FALSE;
+
+    // Check fusing mons
+    for (i = 0; i < PARTY_SIZE - 1; i++){
+
+        Qty = 0;    
+
+        // if method is assist or blank, keep checking
+        if (gComboEvolutionTable[species][i].method != COMBO_FUSE)
+            continue;
+
+        // Find fuse mons in party
+        for (j = 0; j < PARTY_SIZE; j++){
+            
+            // don't go fuse yourself / don't fuse again
+            if (j == monIndex || PartyFuseMons[j] == TRUE)
+                continue;
+
+            if (Qty == gComboEvolutionTable[species][i].param)
+                break;
+
+            // mark mons for fusing and check there's enough
+            if (GetMonData(&gPlayerParty[j], MON_DATA_SPECIES) == gComboEvolutionTable[species][i].targetSpecies){
+                PartyFuseMons[j] = TRUE;
+                Qty++;
+            }
+        }
+    }
+}
+
 static void ComboEvolutionFuseMons(u32 species, u32 monIndex){
     // 1) Check what pokemon fuse
     // 2) Find first qualified mon(s) in party & mark for fusing
@@ -1699,6 +1766,8 @@ static void ComboEvolutionFuseMons(u32 species, u32 monIndex){
     u32 i, j, Qty;
     bool32 PartyFuseMons[PARTY_SIZE];
 
+    FindPartyFuseMons(PartyFuseMons, species, monIndex);
+/*
     //init vars
     for (i = 0; i < PARTY_SIZE; i++)
         PartyFuseMons[i] = FALSE;
@@ -1730,7 +1799,7 @@ static void ComboEvolutionFuseMons(u32 species, u32 monIndex){
             }
         }
     }
-
+*/
     // Fuse!
     for (i = 0; i < PARTY_SIZE; i++){
         if (PartyFuseMons[i] == TRUE){

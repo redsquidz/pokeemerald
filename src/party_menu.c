@@ -5093,7 +5093,7 @@ static void Task_TryLearningNextMove(u8 taskId)
     }
 }
 
-static const u8 sText_CanComboEvolve[] = _("{STR_VAR_1} is ready to evolve!\nBut it needs help from another POKéMON.{PAUSE_UNTIL_PRESS}");
+static const u8 sText_CanComboEvolve[] = _("{STR_VAR_1} needs help from another\nPOKéMON before it can evolve!{PAUSE_UNTIL_PRESS}");
 
 static void Task_DisplayCanComboEvolveMessage(u8 taskId){
 
@@ -5124,14 +5124,8 @@ static void PartyMenuTryEvolution(u8 taskId) // combo
         DestroyTask(taskId);
     }
     else if (gEvolutionTable[GetMonData(mon, MON_DATA_SPECIES)][0].method == EVO_COMBO
-        && !ComboParameterPartyCheck(GetMonData(mon, MON_DATA_SPECIES))){
-            
-            Task_DisplayCanComboEvolveMessage(taskId);
-        //    GetMonNickname(mon, gStringVar1);
-        //    StringExpandPlaceholders(gStringVar4, sText_CanComboEvolve);
-        //    DisplayPartyMenuMessage(gStringVar4, TRUE);
-        //    ScheduleBgCopyTilemapToVram(2);
-        }
+            && !ComboParameterPartyCheck(GetMonData(mon, MON_DATA_SPECIES)))
+        Task_DisplayCanComboEvolveMessage(taskId);
     else
     {
         gTasks[taskId].func = Task_ClosePartyMenuAfterText;
