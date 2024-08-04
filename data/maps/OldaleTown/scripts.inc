@@ -409,5 +409,7 @@ Oldale_Give_SlowBro::
 	end
 
 Oldale_Set_Move::
-	setmonmove 1, 0, MOVE_NONE
+	setmonmove 0, 1, MOVE_NONE
+	setmonmove 0, 2, MOVE_NONE
+	setmonmove 0, 3, MOVE_NONE
 	end

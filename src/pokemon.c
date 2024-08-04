@@ -3031,12 +3031,12 @@ u16 MonTryLearningComboMove(struct Pokemon *mon, bool32 *PartyFuseMons, u32 monI
         }        
         // Above, fuse mons are counted.
         // If the count is equal to the current mon we're learning moves from, bookmark the partyId for learning moves below
-        if (++fuseMons == ComboMon) // offset by 1 cuz ComboMon is zero indexed
+        if (fuseMons == ComboMon++) // offset by 1 cuz ComboMon is zero indexed
             learnfromMonIndex = i;
     }
 
     // Quit if all fuse mons moves have been attempted
-    if (sLearningMoveTableID == fuseMons * 4 - 1)
+    if (sLearningMoveTableID >= fuseMons * 4)
         return MOVE_NONE;
         
     // scan party for fuse mons, starting at bookmarked party spot
