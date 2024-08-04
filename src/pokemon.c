@@ -3014,6 +3014,10 @@ u16 MonTryLearningComboMove(struct Pokemon *mon, bool32 *PartyFuseMons, u32 monI
     u32 retVal = MOVE_NONE;
     int ComboMon, ComboMonMove;
 
+    // This shouldn't effect things aside from clearing junk
+    if (firstMove)
+        sLearningMoveTableID = 0;
+
     fuseMons = 0;
     ComboMon = sLearningMoveTableID / 4; //This tells us what mon we're currently fusing moves from
     ComboMonMove = sLearningMoveTableID % 4; //This is move slot factor, will be 0 to 3
@@ -3021,21 +3025,18 @@ u16 MonTryLearningComboMove(struct Pokemon *mon, bool32 *PartyFuseMons, u32 monI
     // count number of fuse mons
     for (i = 0; i < PARTY_SIZE; i++){
         
-        if (PartyFuseMons[i] == TRUE && i != monIndex)
+        if (PartyFuseMons[i] == TRUE && i != monIndex){
+            learnfromMonIndex = i;
             fuseMons++;
-        
+        }        
         // Above, fuse mons are counted.
         // If the count is equal to the current mon we're learning moves from, bookmark the partyId for learning moves below
-        if (fuseMons == ComboMon + 1) // offset by 1 cuz ComboMon is zero indexed
+        if (++fuseMons == ComboMon) // offset by 1 cuz ComboMon is zero indexed
             learnfromMonIndex = i;
     }
 
-    // This shouldn't effect things aside from clearing junk
-    if (firstMove)
-        sLearningMoveTableID = 0;
-
     // Quit if all fuse mons moves have been attempted
-    if (sLearningMoveTableID == fuseMons * 4)
+    if (sLearningMoveTableID == fuseMons * 4 - 1)
         return MOVE_NONE;
         
     // scan party for fuse mons, starting at bookmarked party spot

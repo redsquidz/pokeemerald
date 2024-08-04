@@ -407,3 +407,7 @@ Oldale_Give_SlowBro::
 	givemon SPECIES_SLOWPOKE, 36
 	givemon SPECIES_SHELLDER, 17
 	end
+
+Oldale_Set_Move::
+	setmonmove 1, 0, MOVE_NONE
+	end
