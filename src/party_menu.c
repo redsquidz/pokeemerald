@@ -227,7 +227,7 @@ static EWRAM_DATA u16 *sSlot1TilemapBuffer = 0; // for switching party slots
 static EWRAM_DATA u16 *sSlot2TilemapBuffer = 0; //
 EWRAM_DATA u8 gSelectedOrderFromParty[MAX_FRONTIER_PARTY_SIZE] = {0};
 static EWRAM_DATA u16 sPartyMenuItemId = 0;
-static EWRAM_DATA u16 sUnused = 0;
+static EWRAM_DATA u16 sComboEvolutionQuit = 0;
 EWRAM_DATA u8 gBattlePartyCurrentOrder[PARTY_SIZE / 2] = {0}; // bits 0-3 are the current pos of Slot 1, 4-7 are Slot 2, and so on
 
 // IWRAM common
@@ -481,6 +481,11 @@ static bool8 SetUpFieldMove_Surf(void);
 static bool8 SetUpFieldMove_Fly(void);
 static bool8 SetUpFieldMove_Waterfall(void);
 static bool8 SetUpFieldMove_Dive(void);
+static void ComboEvolution_GetMonNames(void);
+static void Task_DisplayCanComboEvolveMessage(u8 taskId);
+static bool32 Task_DisplayCommitComboMonQuestion(u8 taskId);
+static void Task_CommitComboMonYesNo(u8 taskId);
+static void Task_HandleCommitComboMonYesNoInput(u8 taskId);
 
 // static const data
 #include "data/pokemon/tutor_learnsets.h"
@@ -5094,6 +5099,69 @@ static void Task_TryLearningNextMove(u8 taskId)
 }
 
 static const u8 sText_CanComboEvolve[] = _("{STR_VAR_1} needs help from another\nPOKéMON before it can evolve!{PAUSE_UNTIL_PRESS}");
+static const u8 sText_ComboMonNames1[] = _("{STR_VAR_1} is ready to evolve!\nLet {STR_VAR_2} fuse with them?");
+static const u8 sText_ComboMonNames2[] = _("{STR_VAR_1} and {STR_VAR_2}");
+static const u8 sText_ComboMonNames3[] = _("{STR_VAR_1}\nand {STR_VAR_3}");
+static const u8 sText_ComboMonNames3pt5[] = _("{STR_VAR_1}, {STR_VAR_2},");
+static const u8 sText_ComboMonNames4[] = _("{STR_VAR_1}\n{STR_VAR_3}, and {STR_VAR_2}");
+static const u8 sText_ComboMonNames5[] = _("the entire party");
+static const u8 sText_AnotherPokemon[] = _("another POKéMON");
+
+static void ComboEvolution_GetMonNames(void){
+
+    bool32 PartyFuseMons[PARTY_SIZE];
+    u32 PartyFuseMonSlots[4];
+    u32 i, j, QtyFusing;
+    const u8 *str = sText_ComboMonNames1;
+
+    QtyFusing = 0;
+    j = 0;
+
+    FindPartyFuseMons(PartyFuseMons, GetMonData(&gPlayerParty[gPartyMenu.slotId], MON_DATA_SPECIES), gPartyMenu.slotId);
+
+    for (i = 0; i < PARTY_SIZE; i++){
+        if (PartyFuseMons[i] == TRUE && i != gPartyMenu.slotId){
+            QtyFusing++;
+            PartyFuseMonSlots[j] = i;
+            j++;
+        }
+    }
+
+    switch (QtyFusing)
+    {
+    case 4:
+        GetMonNickname(&gPlayerParty[PartyFuseMonSlots[3]], gStringVar1);
+        str = sText_ComboMonNames4;
+    case 3:
+        GetMonNickname(&gPlayerParty[PartyFuseMonSlots[2]], gStringVar2);
+        if (QtyFusing == 3){
+            str = sText_ComboMonNames3;
+            StringCopy(gStringVar1, gStringVar2);
+        }
+    case 2:
+        GetMonNickname(&gPlayerParty[PartyFuseMonSlots[1]], gStringVar3);
+        if (QtyFusing < 4){
+            StringCopy(gStringVar2, gStringVar3);
+        }
+        if (QtyFusing != 2)
+            StringExpandPlaceholders(gStringVar1, sText_ComboMonNames3pt5);
+        else
+            str = sText_ComboMonNames2;
+    case 1:
+        GetMonNickname(&gPlayerParty[PartyFuseMonSlots[0]], gStringVar2);
+        if (QtyFusing > 1)
+            StringExpandPlaceholders(gStringVar2, str);
+        break;
+    case 5: 
+        StringCopy(gStringVar2, sText_ComboMonNames5);
+        break;
+    default:
+        StringCopy(gStringVar2, sText_AnotherPokemon);
+        break;
+    }
+
+    GetMonNickname(&gPlayerParty[gPartyMenu.slotId], gStringVar1);
+}
 
 static void Task_DisplayCanComboEvolveMessage(u8 taskId){
 
@@ -5104,11 +5172,76 @@ static void Task_DisplayCanComboEvolveMessage(u8 taskId){
     gTasks[taskId].func = Task_ClosePartyMenuAfterText;
 }
 
+static bool32 Task_DisplayCommitComboMonQuestion(u8 taskId)
+{
+    sComboEvolutionQuit = 0;
+    StringCopy(gStringVar2, sText_AnotherPokemon);
+
+    ComboEvolution_GetMonNames;
+    StringExpandPlaceholders(gStringVar4, sText_ComboMonNames1);
+    DisplayPartyMenuMessage(gStringVar4, TRUE);
+    ScheduleBgCopyTilemapToVram(2);
+    gTasks[taskId].func = Task_CommitComboMonYesNo;
+    return TRUE;
+}
+
+static void Task_CommitComboMonYesNo(u8 taskId)
+{
+    if (IsPartyMenuTextPrinterActive() != TRUE)
+    {
+        CreateYesNoMenu(&sPartyMenuYesNoWindowTemplate, 0x4F, 13, 1);
+        gTasks[taskId].func = Task_HandleCommitComboMonYesNoInput;
+    }
+}
+
+static void Task_HandleCommitComboMonYesNoInput(u8 taskId)
+{
+    switch (Menu_ProcessInputNoWrapClearOnChoose())
+    {
+    case 0:
+        sComboEvolutionQuit = 2;
+        gTasks[taskId].func = Task_ClosePartyMenuAfterText;
+    
+        //partymenutryevolution
+        break;
+    case MENU_B_PRESSED:
+        PlaySE(SE_SELECT);
+        // fallthrough
+    case 1:
+        sComboEvolutionQuit = TRUE;
+        gTasks[taskId].func = Task_ClosePartyMenuAfterText;
+        break;
+    }
+
+}
+
 
 static void PartyMenuTryEvolution(u8 taskId) // combo
 {
     struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
     u16 targetSpecies = GetEvolutionTargetSpecies(mon, EVO_MODE_NORMAL, ITEM_NONE);
+
+    if (gEvolutionTable[GetMonData(mon, MON_DATA_SPECIES)][0].method == EVO_COMBO){
+
+        if (!ComboParameterPartyCheck(GetMonData(mon, MON_DATA_SPECIES)))
+            Task_DisplayCanComboEvolveMessage(taskId);
+        else if (Task_DisplayCommitComboMonQuestion(taskId) == TRUE && sComboEvolutionQuit != 0){
+             if (sComboEvolutionQuit == TRUE)
+                targetSpecies = SPECIES_NONE;
+            //sComboEvolutionQuit = 0;
+        }
+        else if (!(JOY_NEW(A_BUTTON)) || !(JOY_NEW(B_BUTTON)))
+            return;
+        /*else{
+            gPartyMenuUseExitCallback = FALSE;
+            Task_DisplayCommitComboMonQuestion(taskId);
+        }
+
+        if (sComboEvolutionQuit == TRUE){
+            targetSpecies = SPECIES_NONE;
+            //gTasks[taskId].func = Task_ClosePartyMenuAfterText;
+        }*/
+    }
 
     if (targetSpecies != SPECIES_NONE)
     {
@@ -5123,9 +5256,6 @@ static void PartyMenuTryEvolution(u8 taskId) // combo
         BeginEvolutionScene(mon, targetSpecies, TRUE, gPartyMenu.slotId);
         DestroyTask(taskId);
     }
-    else if (gEvolutionTable[GetMonData(mon, MON_DATA_SPECIES)][0].method == EVO_COMBO
-            && !ComboParameterPartyCheck(GetMonData(mon, MON_DATA_SPECIES)))
-        Task_DisplayCanComboEvolveMessage(taskId);
     else
     {
         gTasks[taskId].func = Task_ClosePartyMenuAfterText;
