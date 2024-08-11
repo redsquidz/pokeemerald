@@ -404,8 +404,8 @@ Oldale_Give_Candy::
 	end
 
 Oldale_Give_SlowBro::
-	givemon SPECIES_SLOWPOKE, 36
-	givemon SPECIES_SHELLDER, 17
+	givemon SPECIES_ONIX, 23
+	givemon SPECIES_LAIRON, 39
 	end
 
 Oldale_Set_Move::
