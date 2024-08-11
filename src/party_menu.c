@@ -5030,6 +5030,8 @@ static void Task_DisplayLevelUpStatsPg2(u8 taskId)
         DisplayLevelUpStatsPg2(taskId);
         gTasks[taskId].func = Task_TryLearnNewMoves;
     }
+
+    sComboEvolutionQuit = 0;
 }
 
 static void DisplayLevelUpStatsPg1(u8 taskId)
@@ -5174,12 +5176,13 @@ static void Task_DisplayCanComboEvolveMessage(u8 taskId){
 
 static bool32 Task_DisplayCommitComboMonQuestion(u8 taskId)
 {
-    sComboEvolutionQuit = 0;
-    StringCopy(gStringVar2, sText_AnotherPokemon);
+    //StringCopy(gStringVar2, sText_AnotherPokemon);
 
     ComboEvolution_GetMonNames;
     StringExpandPlaceholders(gStringVar4, sText_ComboMonNames1);
-    DisplayPartyMenuMessage(gStringVar4, TRUE);
+    
+    if (sComboEvolutionQuit == 0)
+        DisplayPartyMenuMessage(gStringVar4, TRUE);
     ScheduleBgCopyTilemapToVram(2);
     gTasks[taskId].func = Task_CommitComboMonYesNo;
     return TRUE;
@@ -5200,8 +5203,11 @@ static void Task_HandleCommitComboMonYesNoInput(u8 taskId)
     {
     case 0:
         sComboEvolutionQuit = 2;
-        gTasks[taskId].func = Task_ClosePartyMenuAfterText;
+        gTasks[taskId].func = PartyMenuTryEvolution;
     
+        //ClearStdWindowAndFrameToTransparent(WIN_MSG, FALSE);
+        //ClearWindowTilemap(WIN_MSG);
+
         //partymenutryevolution
         break;
     case MENU_B_PRESSED:
@@ -5224,33 +5230,27 @@ static void PartyMenuTryEvolution(u8 taskId) // combo
     if (gEvolutionTable[GetMonData(mon, MON_DATA_SPECIES)][0].method == EVO_COMBO){
 
         if (!ComboParameterPartyCheck(GetMonData(mon, MON_DATA_SPECIES)))
+
             Task_DisplayCanComboEvolveMessage(taskId);
-        else if (Task_DisplayCommitComboMonQuestion(taskId) == TRUE && sComboEvolutionQuit != 0){
-             if (sComboEvolutionQuit == TRUE)
+        
+        else if (Task_DisplayCommitComboMonQuestion(taskId) == TRUE && sComboEvolutionQuit != 0){   
+
+            if (sComboEvolutionQuit == TRUE)
                 targetSpecies = SPECIES_NONE;
-            //sComboEvolutionQuit = 0;
+
+            if (targetSpecies == SPECIES_MACHAMP || targetSpecies == SPECIES_GOLEM){ // combo
+            //gPartyMenu.exitCallback = CB2_ReturnToPartyMenuFromMachokeGraveller
+
+            }
         }
         else if (!(JOY_NEW(A_BUTTON)) || !(JOY_NEW(B_BUTTON)))
+        
             return;
-        /*else{
-            gPartyMenuUseExitCallback = FALSE;
-            Task_DisplayCommitComboMonQuestion(taskId);
-        }
-
-        if (sComboEvolutionQuit == TRUE){
-            targetSpecies = SPECIES_NONE;
-            //gTasks[taskId].func = Task_ClosePartyMenuAfterText;
-        }*/
     }
 
     if (targetSpecies != SPECIES_NONE)
     {
         FreePartyPointers();
-
-        if (targetSpecies == SPECIES_MACHAMP || targetSpecies == SPECIES_GOLEM){ // combo
-            //gPartyMenu.exitCallback = CB2_ReturnToPartyMenuFromMachokeGraveller
-
-        };
 
         gCB2_AfterEvolution = gPartyMenu.exitCallback;
         BeginEvolutionScene(mon, targetSpecies, TRUE, gPartyMenu.slotId);
