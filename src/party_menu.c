@@ -481,11 +481,17 @@ static bool8 SetUpFieldMove_Surf(void);
 static bool8 SetUpFieldMove_Fly(void);
 static bool8 SetUpFieldMove_Waterfall(void);
 static bool8 SetUpFieldMove_Dive(void);
-static u8 *ComboEvolution_GetMonNames(u8 *dest);
+static u8 *ComboEvolution_CountAndGetMonNames(u8 *dest, u32 *count);
 static void Task_DisplayCanComboEvolveMessage(u8 taskId);
 static bool32 Task_DisplayCommitComboMonQuestion(u8 taskId);
 static void Task_CommitComboMonYesNo(u8 taskId);
 static void Task_HandleCommitComboMonYesNoInput(u8 taskId);
+
+enum sComboQuit {
+    COMBO_STILL_ASKING,
+    COMBO_QUIT_EVOLVE,
+    COMBO_DO_EVOLVE
+};
 
 // static const data
 #include "data/pokemon/tutor_learnsets.h"
@@ -5031,7 +5037,7 @@ static void Task_DisplayLevelUpStatsPg2(u8 taskId)
         gTasks[taskId].func = Task_TryLearnNewMoves;
     }
 
-    sComboEvolutionQuit = 0;
+    sComboEvolutionQuit = COMBO_STILL_ASKING;
 }
 
 static void DisplayLevelUpStatsPg1(u8 taskId)
@@ -5109,7 +5115,7 @@ static const u8 sText_ComboMonNames4[] = _("{STR_VAR_1}\n{STR_VAR_3}, and {STR_V
 static const u8 sText_ComboMonNames5[] = _("the entire party");
 static const u8 sText_AnotherPokemon[] = _("another POKéMON");
 
-static u8 *ComboEvolution_GetMonNames(u8 *dest){
+static u8 *ComboEvolution_CountAndGetMonNames(u8 *names, u32 *count){
 
     bool32 PartyFuseMons[PARTY_SIZE];
     u32 PartyFuseMonSlots[4];
@@ -5128,6 +5134,8 @@ static u8 *ComboEvolution_GetMonNames(u8 *dest){
             j++;
         }
     }
+
+    *count = QtyFusing;
 
     switch (QtyFusing)
     {
@@ -5152,13 +5160,13 @@ static u8 *ComboEvolution_GetMonNames(u8 *dest){
     case 1:
         GetMonNickname(&gPlayerParty[PartyFuseMonSlots[0]], gStringVar2);
         if (QtyFusing > 1)
-            StringExpandPlaceholders(dest, str);
+            StringExpandPlaceholders(names, str);
         break;
     case 5: 
-        StringCopy(dest, sText_ComboMonNames5);
+        StringCopy(names, sText_ComboMonNames5);
         break;
     default:
-        StringCopy(dest, sText_AnotherPokemon);
+        StringCopy(names, sText_AnotherPokemon);
         break;
     }
 
@@ -5176,12 +5184,18 @@ static void Task_DisplayCanComboEvolveMessage(u8 taskId){
 
 static bool32 Task_DisplayCommitComboMonQuestion(u8 taskId)
 {
-    //StringCopy(gStringVar2, sText_AnotherPokemon);
+    u32 fusecount;
 
-    ComboEvolution_GetMonNames(gStringVar2);
+    ComboEvolution_CountAndGetMonNames(gStringVar2, &fusecount);
+
+    if (fusecount == 0){
+        sComboEvolutionQuit = COMBO_DO_EVOLVE;
+        return TRUE;
+    }
+
     StringExpandPlaceholders(gStringVar4, sText_ComboMonNames1);
     
-    if (sComboEvolutionQuit == 0)
+    if (sComboEvolutionQuit == COMBO_STILL_ASKING)
         DisplayPartyMenuMessage(gStringVar4, TRUE);
     ScheduleBgCopyTilemapToVram(2);
     gTasks[taskId].func = Task_CommitComboMonYesNo;
@@ -5202,19 +5216,14 @@ static void Task_HandleCommitComboMonYesNoInput(u8 taskId)
     switch (Menu_ProcessInputNoWrapClearOnChoose())
     {
     case 0:
-        sComboEvolutionQuit = 2;
+        sComboEvolutionQuit = COMBO_DO_EVOLVE;
         gTasks[taskId].func = PartyMenuTryEvolution;
-    
-        //ClearStdWindowAndFrameToTransparent(WIN_MSG, FALSE);
-        //ClearWindowTilemap(WIN_MSG);
-
-        //partymenutryevolution
         break;
     case MENU_B_PRESSED:
         PlaySE(SE_SELECT);
         // fallthrough
     case 1:
-        sComboEvolutionQuit = TRUE;
+        sComboEvolutionQuit = COMBO_QUIT_EVOLVE;
         gTasks[taskId].func = Task_ClosePartyMenuAfterText;
         break;
     }
@@ -5229,16 +5238,20 @@ static void PartyMenuTryEvolution(u8 taskId) // combo
 
     if (gEvolutionTable[GetMonData(mon, MON_DATA_SPECIES)][0].method == EVO_COMBO){
 
-        // If pokemon can't evolve due to missing assist/fuse mons, tell player so they're not confused
-        if (!ComboParameterPartyCheck(GetMonData(mon, MON_DATA_SPECIES)))
+        // If mon just isn't high enough level, do nothing
+        if (targetSpecies == COMBO_NOT_READY)
+            targetSpecies = SPECIES_NONE;
+
+        // If mon can't evolve due to missing assist/fuse mons, tell player so they're not confused
+        else if (!ComboParameterPartyCheck(GetMonData(mon, MON_DATA_SPECIES)))
 
             Task_DisplayCanComboEvolveMessage(taskId);
         //else if (ComboFuseMonCount == 0){ check for machoke/graveller special, otherwise proceed}
-        
-        // If fusion is possible, let the player confirm so they don't mistakenly lose a mon's individuality
-        else if (Task_DisplayCommitComboMonQuestion(taskId) == TRUE && sComboEvolutionQuit != 0){   
 
-            if (sComboEvolutionQuit == TRUE)
+        // If fusion is possible, let the player confirm so they don't mistakenly lose a mon's individuality
+        else if (Task_DisplayCommitComboMonQuestion(taskId) == TRUE && sComboEvolutionQuit != COMBO_STILL_ASKING){   
+
+            if (sComboEvolutionQuit == COMBO_QUIT_EVOLVE)
                 targetSpecies = SPECIES_NONE;
 
             if (targetSpecies == SPECIES_MACHAMP || targetSpecies == SPECIES_GOLEM){ // combo

@@ -6,6 +6,7 @@ void EvolutionScene(struct Pokemon *mon, u16 speciesToEvolve, bool8 canStopEvo, 
 void TradeEvolutionScene(struct Pokemon *mon, u16 speciesToEvolve, u8 preEvoSpriteID, u8 partyID);
 
 void FindPartyFuseMons(bool32 *PartyFuseMons, u32 species, u32 monIndex);
+#define COMBO_NOT_READY NUM_SPECIES
 
 extern void (*gCB2_AfterEvolution)(void);
 

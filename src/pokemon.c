@@ -5616,7 +5616,8 @@ u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 mode, u16 evolutionItem)
             case EVO_COMBO: // combo evo
                 if (gEvolutionTable[species][i].param <= level && ComboParameterPartyCheck(species))
                     targetSpecies = gEvolutionTable[species][i].targetSpecies;
-
+                else if (gEvolutionTable[species][i].param > level)
+                    targetSpecies = COMBO_NOT_READY;
                 break;
             }
         }
