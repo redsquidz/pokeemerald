@@ -404,8 +404,8 @@ Oldale_Give_Candy::
 	end
 
 Oldale_Give_SlowBro::
-	givemon SPECIES_ONIX, 23
-	givemon SPECIES_LAIRON, 39
+	givemon SPECIES_MAGNEMITE, 28
+	givemon SPECIES_MAGNEMITE, 28
 	end
 
 Oldale_Set_Move::

@@ -51,8 +51,10 @@
 #include "constants/rgb.h"
 #include "constants/songs.h"
 #include "constants/trainers.h"
+#include "party_menu.h"
 
 extern const u8 *const gBattleScriptsForMoveEffects[];
+extern struct Evolution gEvolutionTable[][PARTY_SIZE - 1];
 
 #define DEFENDER_IS_PROTECTED ((gProtectStructs[gBattlerTarget].protected) && (gBattleMoves[gCurrentMove].flags & FLAG_PROTECT_AFFECTED))
 
@@ -3447,6 +3449,57 @@ static void Cmd_getexp(void)
 
                 BattleScriptPushCursor();
                 gLeveledUpInBattle |= gBitTable[gBattleStruct->expGetterMonId];
+
+
+
+                while (gLeveledUpInBattle != 0)
+                {
+                    for (i = 0; i < PARTY_SIZE; i++)
+                    {
+                        if (gLeveledUpInBattle & gBitTable[i])
+                        {
+                            u8 levelUpBits = gLeveledUpInBattle;
+                            u16 species = GetEvolutionTargetSpecies(&gPlayerParty[i], EVO_MODE_NORMAL, ITEM_NONE);
+
+                            levelUpBits &= ~(gBitTable[i]);
+                            gLeveledUpInBattle = levelUpBits;
+
+                            //do player messaging in battle to decide on combo evolution, save responses 
+                            if (gEvolutionTable[GetMonData(&gPlayerParty[i], MON_DATA_SPECIES)][0].method == EVO_COMBO){
+                                
+                                u32 fusecount;
+
+                                // If mon can't evolve due to missing assist/fuse mons, tell player so they're not confused
+                                if (!ComboParameterPartyCheck(GetMonData(&gPlayerParty[i], MON_DATA_SPECIES)))
+
+                                    //Task_DisplayCanComboEvolveMessage(taskId);
+                                
+                                // If fusion is possible, let the player confirm so they don't mistakenly lose a mon's individuality
+                                //else gbattlemainfunc = overworld message (can evolve / needs help ^)
+
+                                ComboEvolution_CountAndGetMonNames(gStringVar2, &fusecount);
+
+                                if (fusecount == 0){
+                                    //check for machoke/graveller special, otherwise proceed}
+
+                                }
+
+
+                                if (species != SPECIES_NONE)
+                                {
+                                    //gBattlescriptCurrInstr = BattleScript_LevelUpWithEvoSugg;
+                                }
+                                else
+                                {
+                                    gBattlescriptCurrInstr = BattleScript_LevelUp;
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+
                 gBattlescriptCurrInstr = BattleScript_LevelUp;
                 gBattleMoveDamage = (gBattleBufferB[gActiveBattler][2] | (gBattleBufferB[gActiveBattler][3] << 8));
                 AdjustFriendship(&gPlayerParty[gBattleStruct->expGetterMonId], FRIENDSHIP_EVENT_GROW_LEVEL);
@@ -3459,8 +3512,6 @@ static void Cmd_getexp(void)
                     gBattleMons[0].maxHP = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_MAX_HP);
                     gBattleMons[0].attack = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_ATK);
                     gBattleMons[0].defense = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_DEF);
-                    // Speed is duplicated, likely due to a copy-paste error.
-                    gBattleMons[0].speed = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPEED);
                     gBattleMons[0].speed = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPEED);
                     gBattleMons[0].spAttack = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPATK);
                     gBattleMons[0].spDefense = GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPDEF);

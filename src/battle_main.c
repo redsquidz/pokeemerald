@@ -63,6 +63,7 @@
 
 extern const struct BgTemplate gBattleBgTemplates[];
 extern const struct WindowTemplate *const gBattleWindowTemplates[];
+extern struct Evolution gEvolutionTable[][PARTY_SIZE - 1];
 
 static void CB2_InitBattleInternal(void);
 static void CB2_PreInitMultiBattle(void);
@@ -5152,6 +5153,7 @@ static void FreeResetData_ReturnToOvOrDoEvolutions(void)
 static void TryEvolvePokemon(void)
 {
     s32 i;
+    bool32 finishComboEvos = FALSE;
 
     while (gLeveledUpInBattle != 0)
     {
@@ -5166,6 +5168,24 @@ static void TryEvolvePokemon(void)
                 gLeveledUpInBattle = levelUpBits;
 
                 species = GetEvolutionTargetSpecies(&gPlayerParty[i], EVO_MODE_NORMAL, levelUpBits);
+                
+                if (finishComboEvos == FALSE){
+                    // combo evolve ask, if no then set species_none
+                    if (gEvolutionTable[GetMonData(&gPlayerParty[i], MON_DATA_SPECIES)][0].method == EVO_COMBO){
+
+                        // If mon just isn't high enough level or player chooses no, do nothing
+                        //if (species == COMBO_NOT_READY || confirmComboEvolve[i] == FALSE)
+                            species = SPECIES_NONE;
+
+                    }
+                    else if (i != 5)
+                        continue;
+                    else {
+                        i = 0;
+                        finishComboEvos == TRUE;
+                    }
+                }
+
                 if (species != SPECIES_NONE)
                 {
                     FreeAllWindowBuffers();

@@ -1819,3 +1819,13 @@ const u8 gText_Answer[] = _("ANSWER");
 const u8 gText_PokeBalls[] = _("POKé BALLS");
 const u8 gText_Berry[] = _("BERRY");
 const u8 gText_Berries[] = _("BERRIES");
+
+// Combo Evolution
+const u8 sText_CanComboEvolve[] = _("{STR_VAR_1} needs help from another\nPOKéMON before it can evolve!{PAUSE_UNTIL_PRESS}");
+const u8 sText_ComboMonNames1[] = _("{STR_VAR_1} is ready to evolve!\nAllow {STR_VAR_2} to fuse with them?");
+const u8 sText_ComboMonNames2[] = _("{STR_VAR_1} and {STR_VAR_2}");
+const u8 sText_ComboMonNames3[] = _("{STR_VAR_1}\nand {STR_VAR_3}");
+const u8 sText_ComboMonNames3pt5[] = _("{STR_VAR_1}, {STR_VAR_2},");
+const u8 sText_ComboMonNames4[] = _("{STR_VAR_1}\n{STR_VAR_2}, and {STR_VAR_3}");
+const u8 sText_ComboMonNames5[] = _("the entire party");
+const u8 sText_AnotherPokemon[] = _("another POKéMON");

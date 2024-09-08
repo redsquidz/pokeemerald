@@ -1765,6 +1765,7 @@ static void ComboEvolutionFuseMons(u32 species, u32 monIndex){
 
     u32 i, j, Qty;
     bool32 PartyFuseMons[PARTY_SIZE];
+    u16 item = ITEM_NONE;
 
     FindPartyFuseMons(PartyFuseMons, species, monIndex);
 /*
@@ -1803,7 +1804,11 @@ static void ComboEvolutionFuseMons(u32 species, u32 monIndex){
     // Fuse!
     for (i = 0; i < PARTY_SIZE; i++){
         if (PartyFuseMons[i] == TRUE){
-            AddBagItem(GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM, 0), 1);
+
+            item = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
+
+            if (item != ITEM_NONE)
+                AddBagItem(item, 1);
             ZeroMonData(&gPlayerParty[i]);
         }
     }

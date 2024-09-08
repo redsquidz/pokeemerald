@@ -3026,4 +3026,14 @@ extern const u8 gText_BoxName[];
 extern const u8 gText_PkmnsNickname[];
 extern const u8 gText_TellHimTheWords[];
 
+// Combo Evolution
+extern const u8 sText_CanComboEvolve[];
+extern const u8 sText_ComboMonNames1[];
+extern const u8 sText_ComboMonNames2[];
+extern const u8 sText_ComboMonNames3[];
+extern const u8 sText_ComboMonNames3pt5[];
+extern const u8 sText_ComboMonNames4[];
+extern const u8 sText_ComboMonNames5[];
+extern const u8 sText_AnotherPokemon[];
+
 #endif // GUARD_STRINGS_H

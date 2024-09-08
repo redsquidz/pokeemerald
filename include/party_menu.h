@@ -89,5 +89,6 @@ void MoveDeleterForgetMove(void);
 void BufferMoveDeleterNicknameAndMove(void);
 void GetNumMovesSelectedMonHas(void);
 void MoveDeleterChooseMoveToForget(void);
+u8 *ComboEvolution_CountAndGetMonNames(u8 *dest, u32 *count);
 
 #endif // GUARD_PARTY_MENU_H
