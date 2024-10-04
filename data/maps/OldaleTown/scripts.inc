@@ -404,7 +404,7 @@ Oldale_Give_Candy::
 	end
 
 Oldale_Give_SlowBro::
-	givemon SPECIES_MAGNEMITE, 28
+	givemon SPECIES_SLOWPOKE, 4
 	givemon SPECIES_MAGNEMITE, 28
 	end
 

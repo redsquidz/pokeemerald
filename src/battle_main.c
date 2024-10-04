@@ -2,6 +2,7 @@
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_ai_script_commands.h"
+#include "battle_script_commands.h"
 #include "battle_arena.h"
 #include "battle_controllers.h"
 #include "battle_interface.h"
@@ -5174,7 +5175,7 @@ static void TryEvolvePokemon(void)
                     if (gEvolutionTable[GetMonData(&gPlayerParty[i], MON_DATA_SPECIES)][0].method == EVO_COMBO){
 
                         // If mon just isn't high enough level or player chooses no, do nothing
-                        //if (species == COMBO_NOT_READY || confirmComboEvolve[i] == FALSE)
+                        if (species == COMBO_NOT_READY || DoBattleComboEvolve[i] == FALSE)
                             species = SPECIES_NONE;
 
                     }

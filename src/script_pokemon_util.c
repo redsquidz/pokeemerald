@@ -134,7 +134,7 @@ bool8 DoesPartyHaveEnigmaBerry(void)
     return hasItem;
 }
 
-// Returns FALSE or pos of mon. Level and item args are optional, set 0 to ignore
+// Returns FALSE or position of mon. Level and item args are optional, set 0 to skip check
 u32 DoesPartyHaveMon(u16 mon, u8 level, u16 item, u32 startspot){
 
     u32 i;

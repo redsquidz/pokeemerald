@@ -5105,7 +5105,7 @@ static void Task_TryLearningNextMove(u8 taskId)
     }
 }
 
-u8 *ComboEvolution_CountAndGetMonNames(u8 *names, u32 *count){
+u8 *ComboEvolution_CountAndGetMonNames(bool32 context, u32 *count, u32 mon){
 
     bool32 PartyFuseMons[PARTY_SIZE];
     u8 PartyFuseMonSlots[4][POKEMON_NAME_BUFFER_SIZE];
@@ -5116,14 +5116,12 @@ u8 *ComboEvolution_CountAndGetMonNames(u8 *names, u32 *count){
     j = 0;
     for (i = 0; i < PARTY_SIZE; i++)
         PartyFuseMons[i] = FALSE;
-    //for (i = 0; i < sizeof PartyFuseMonSlots; i++)
-    //    PartyFuseMonSlots[i][] = {0};
     memset(PartyFuseMonSlots, 0, sizeof PartyFuseMonSlots);
 
-    FindPartyFuseMons(PartyFuseMons, GetMonData(&gPlayerParty[gPartyMenu.slotId], MON_DATA_SPECIES), gPartyMenu.slotId);
+    FindPartyFuseMons(PartyFuseMons, GetMonData(&gPlayerParty[mon], MON_DATA_SPECIES), mon);
 
     for (i = 0; i < PARTY_SIZE; i++){
-        if (PartyFuseMons[i] == TRUE && i != gPartyMenu.slotId){
+        if (PartyFuseMons[i] == TRUE && i != mon){
             QtyFusing++;
             GetMonNickname(&gPlayerParty[i], PartyFuseMonSlots[j]);
             j++;
@@ -5176,52 +5174,13 @@ u8 *ComboEvolution_CountAndGetMonNames(u8 *names, u32 *count){
         break;
     }
 
+    GetMonNickname(&gPlayerParty[mon], gStringVar1);
 
-
-
-
-/*
-    switch (QtyFusing)
-    {
-    case 4:
-        GetMonNickname(&gPlayerParty[PartyFuseMonSlots[3]], gStringVar1); //4th fuse mon = gSV1
-        str = sText_ComboMonNames4;                                       //STRVAR1, STRVAR2, and STRVAR3
-    case 3:
-        GetMonNickname(&gPlayerParty[PartyFuseMonSlots[2]], gStringVar2); //3rd fuse mon = gSV2
-        if (QtyFusing == 3){
-            str = sText_ComboMonNames3;                                   //STRVAR1 and STRVAR3
-            StringCopy(gStringVar1, gStringVar2);                         //gSV-- (1)
-        }
-    case 2:
-        GetMonNickname(&gPlayerParty[PartyFuseMonSlots[1]], gStringVar3); //2nd fuse mon = gSV3
-        if (QtyFusing < 4){
-            StringCopy(gStringVar2, gStringVar3);                         //gSV-- (2) if 3 or 2 mons
-        }
-
-        if (QtyFusing > 2){
-            StringExpandPlaceholders(gStringVar1, sText_ComboMonNames3pt5);//if > 2, "SV1, SV2," -> SV1
-            
-        }
-        else {
-            StringCopy(gStringVar1, gStringVar2);                          //gSV-- (1)
-            str = sText_ComboMonNames2;                                    //SV1 and SV2
-        }
-    case 1:
-        GetMonNickname(&gPlayerParty[PartyFuseMonSlots[0]], gStringVar2); //fuse mon = gSV2
-        if (QtyFusing > 1)
-            StringExpandPlaceholders(gStringVar2, str);                         //str -> gSV2
-        break;
-    case 5: 
-        StringCopy(gStringVar2, sText_ComboMonNames5);                          //gSV2
-        break;
-    default:
-        StringCopy(gStringVar2, sText_AnotherPokemon);                          //gSV2  
-        break;
-    }
-    */
-
-    GetMonNickname(&gPlayerParty[gPartyMenu.slotId], gStringVar1);        //gSV1 = primary
-    //return gStringVar2;                                                   //return gSV2
+    //BattleStringExpandPlaceholdersToDisplayedString
+    //if (context == 1){
+    //    StringCopy(gBattleTextBuff1, gStringVar1);
+    //    StringCopy(gBattleTextBuff2, gStringVar2);
+    //}
 }
 
 static void Task_DisplayCanComboEvolveMessage(u8 taskId){
@@ -5237,7 +5196,7 @@ static bool32 Task_DisplayCommitComboMonQuestion(u8 taskId)
 {
     u32 fusecount;
 
-    ComboEvolution_CountAndGetMonNames(gStringVar2, &fusecount);
+    ComboEvolution_CountAndGetMonNames(0, &fusecount, gPartyMenu.slotId);
 
     if (fusecount == 0){
         //check for machoke/graveller special, otherwise proceed}
@@ -5281,7 +5240,6 @@ static void Task_HandleCommitComboMonYesNoInput(u8 taskId)
     }
 
 }
-
 
 static void PartyMenuTryEvolution(u8 taskId) // combo
 {

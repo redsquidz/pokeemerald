@@ -52,9 +52,12 @@
 #include "constants/songs.h"
 #include "constants/trainers.h"
 #include "party_menu.h"
+#include "evolution_scene.h"
 
 extern const u8 *const gBattleScriptsForMoveEffects[];
 extern struct Evolution gEvolutionTable[][PARTY_SIZE - 1];
+
+EWRAM_DATA bool32 DoBattleComboEvolve[PARTY_SIZE] = {0};
 
 #define DEFENDER_IS_PROTECTED ((gProtectStructs[gBattlerTarget].protected) && (gBattleMoves[gCurrentMove].flags & FLAG_PROTECT_AFFECTED))
 
@@ -3248,6 +3251,7 @@ static void Cmd_getexp(void)
     s32 sentIn;
     s32 viaExpShare = 0;
     u16 *exp = &gBattleStruct->expValue;
+    memset(DoBattleComboEvolve, 0, sizeof DoBattleComboEvolve);
 
     gBattlerFainted = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
     sentIn = gSentPokesToOpponent[(gBattlerFainted & 2) >> 1];
@@ -3450,10 +3454,10 @@ static void Cmd_getexp(void)
                 BattleScriptPushCursor();
                 gLeveledUpInBattle |= gBitTable[gBattleStruct->expGetterMonId];
 
-
-
                 while (gLeveledUpInBattle != 0)
                 {
+                    gBattleCommunication[6] = 0;
+
                     for (i = 0; i < PARTY_SIZE; i++)
                     {
                         if (gLeveledUpInBattle & gBitTable[i])
@@ -3468,39 +3472,39 @@ static void Cmd_getexp(void)
                             if (gEvolutionTable[GetMonData(&gPlayerParty[i], MON_DATA_SPECIES)][0].method == EVO_COMBO){
                                 
                                 u32 fusecount;
+                                ComboEvolution_CountAndGetMonNames(1, &fusecount, i);
+                                //StringCopy(gBattleTextBuff3, gStringVar2);
 
                                 // If mon can't evolve due to missing assist/fuse mons, tell player so they're not confused
-                                if (!ComboParameterPartyCheck(GetMonData(&gPlayerParty[i], MON_DATA_SPECIES)))
+                                if (!ComboParameterPartyCheck(GetMonData(&gPlayerParty[i], MON_DATA_SPECIES)) &&
+                                    species != COMBO_NOT_READY){
 
                                     //Task_DisplayCanComboEvolveMessage(taskId);
-                                
+                                    //gBattlescriptCurrInstr = BattleScript_AbleToComboEvolve;
+                                    gBattleCommunication[6] = 1;
+                                    //continue;
+                                }
+
                                 // If fusion is possible, let the player confirm so they don't mistakenly lose a mon's individuality
-                                //else gbattlemainfunc = overworld message (can evolve / needs help ^)
-
-                                ComboEvolution_CountAndGetMonNames(gStringVar2, &fusecount);
-
-                                if (fusecount == 0){
+                                else if (fusecount == 0){
                                     //check for machoke/graveller special, otherwise proceed}
-
                                 }
-
-
-                                if (species != SPECIES_NONE)
-                                {
-                                    //gBattlescriptCurrInstr = BattleScript_LevelUpWithEvoSugg;
-                                }
-                                else
-                                {
-                                    gBattlescriptCurrInstr = BattleScript_LevelUp;
+                                else {
+                                    //gBattlescriptCurrInstr = BattleScript_AskComboEvolve;
+                                    gBattleCommunication[6] = 2;
+                                    //if (gSpecialVar_Result == FALSE)
+                                    //    DoBattleComboEvolve[i] = TRUE;
                                 }
                             }
+                            gBattlescriptCurrInstr = BattleScript_LevelUp;
+                                                                
                         }
+
+                        if (gBattleCommunication[6] == 3)
+                            DoBattleComboEvolve[i] = TRUE;
                     }
                 }
 
-
-
-                gBattlescriptCurrInstr = BattleScript_LevelUp;
                 gBattleMoveDamage = (gBattleBufferB[gActiveBattler][2] | (gBattleBufferB[gActiveBattler][3] << 8));
                 AdjustFriendship(&gPlayerParty[gBattleStruct->expGetterMonId], FRIENDSHIP_EVENT_GROW_LEVEL);
 
@@ -3566,6 +3570,15 @@ static void Cmd_getexp(void)
         }
         break;
     }
+}
+
+void ComboEvolution_BattleMessage(void){
+
+    u32 fusecount;
+
+    ComboEvolution_CountAndGetMonNames(1, &fusecount, gBattleStruct->expGetterMonId);
+    
+
 }
 
 // For battles that aren't BATTLE_TYPE_LINK or BATTLE_TYPE_RECORDED_LINK, the only thing this
@@ -5846,6 +5859,8 @@ static void Cmd_chosenstatusanimation(void)
 
 static void Cmd_yesnobox(void)
 {
+    gSpecialVar_Result = 0;
+
     switch (gBattleCommunication[0])
     {
     case 0:
@@ -5881,6 +5896,7 @@ static void Cmd_yesnobox(void)
         {
             PlaySE(SE_SELECT);
             HandleBattleWindow(YESNOBOX_X_Y, WINDOW_CLEAR);
+            gSpecialVar_Result = 1;
             gBattlescriptCurrInstr++;
         }
         break;

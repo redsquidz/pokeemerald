@@ -7214,7 +7214,7 @@ bool32 ComboParameterPartyCheck(u16 species){
 
     QtyFuseMons = 0;
 
-    for (i = 0; i < PARTY_SIZE - 1; i++){
+    for (i = 0; i < PARTY_SIZE - 1; i++){ //where PARTYSIZE - 1 = number of mons available for fusing
 
         pass = FALSE;
         comboSpecies = gComboEvolutionTable[species][i].targetSpecies;
@@ -7229,6 +7229,7 @@ bool32 ComboParameterPartyCheck(u16 species){
                     }
                 }
 
+                // if fusing with other mons of the same specie, subtract evolving mon from the count
                 if (comboSpecies == species)
                     QtyFuseMons--;
 

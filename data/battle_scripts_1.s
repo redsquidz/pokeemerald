@@ -3187,6 +3187,9 @@ BattleScript_LearnedNewMove::
 	updatechoicemoveonlvlup BS_ATTACKER
 	goto BattleScript_TryLearnMoveLoop
 BattleScript_LearnMoveReturn::
+	@ copyarray gBattleTextBuff2, gBattleTextBuff3, 100
+	jumpifbyte CMP_EQUAL, gBattleCommunication + 6, 1, BattleScript_AbleToComboEvolve
+	jumpifbyte CMP_EQUAL, gBattleCommunication + 6, 2, BattleScript_AskComboEvolve
 	return
 
 BattleScript_RainContinuesOrEnds::
@@ -4560,3 +4563,22 @@ BattleScript_PrintPlayerForfeitedLinkBattle::
 	endlinkbattle
 	waitmessage B_WAIT_TIME_LONG
 	end2
+
+BattleScript_AbleToComboEvolve::
+	printstring STRINGID_CANCOMBOEVOLVE
+	waitmessage 1
+	return
+BattleScript_AskComboEvolve::
+	@callnative ComboEvolution_BattleMessage @goto different script, try the copystring thing again, return
+	printstring STRINGID_ALLOWCOMBOEVOLVE
+	setbyte gBattleCommunication, 0
+	yesnobox
+	jumpifbyte CMP_EQUAL, gBattleCommunication + 1, 0, BattleScript_AskComboEvolveCheck
+	return
+BattleScript_AskComboEvolveCheck::
+	printstring STRINGID_STOPLEARNINGMOVE
+	setbyte gBattleCommunication, 0
+	yesnobox
+	jumpifbyte CMP_EQUAL, gBattleCommunication + 1, 0, BattleScript_AbleToComboEvolve
+	setbyte gBattleCommunication + 6, 3
+	return
